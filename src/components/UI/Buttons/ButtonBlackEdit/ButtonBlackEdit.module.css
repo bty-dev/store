@@ -1,0 +1,20 @@
+.main {
+    cursor: pointer;
+    padding: 15px 20px;
+    background-color: #000;
+    color: #fff;
+    font-weight: bold;
+    font-size: 20px;
+    border: 2px solid transparent;
+    border-radius: 20px;
+    transition: .3s;
+    text-align: center;
+}
+
+.main:hover {
+    border-color: #000;
+    color: #000;
+    background-color: #fff;
+}
+
+

@@ -1,23 +1,22 @@
-import logo from './logo.svg';
-import './App.css';
+import ShopsAndScales from "./components/ShopsAndScales/ShopsAndScales";
+import ButtonBlack from "./components/UI/Buttons/ButtonBlack/ButtonBlack";
+import ButtonStroke from "./components/UI/Buttons/ButtonStroke/ButtonStroke";
+import SearchField from "./components/UI/SearchField/SearchField";
+import Products from "./components/Products/Products";
+import Categories from "./components/Categories/Categories";
+import {Routes, Route, Link} from "react-router-dom";
+import OldScales from "./components/OldScales/OldScales";
+
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+        <Routes>
+            <Route path="/" element={ <ShopsAndScales/>}/>
+            <Route path="/products" element={ <Products />}/>
+            <Route path="/categories" element={ <Categories />}/>
+            <Route path="/oldScales" element={ <OldScales />}/>
+        </Routes>
     </div>
   );
 }

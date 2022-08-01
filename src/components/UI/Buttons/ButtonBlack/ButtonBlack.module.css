@@ -1,0 +1,19 @@
+.container {
+    cursor: pointer;
+    background-color: #000;
+    border-radius: 12px;
+    padding: 10px 20px;
+    color: #fff;
+    font-size: 15px;
+    border: 2px solid transparent;
+    transition: .3s;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.container:hover {
+    background-color: transparent;
+    color: #000;
+    border-color: #000;
+
+}
