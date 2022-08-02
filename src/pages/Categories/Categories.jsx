@@ -1,14 +1,14 @@
 import React, {useEffect, useState} from 'react';
 import classes from './Categories.module.css';
-import SearchField from "../UI/SearchField/SearchField";
-import ButtonBlack from "../UI/Buttons/ButtonBlack/ButtonBlack";
-import Accordion from "../Accordion/Accordion";
-import ModalChoose from "../UI/Modals/ModalChoose/ModalChoose";
-import CategoriesAccordion from "../CategoriesAccordion/CategoriesAccordion";
-import Chips from "../Chips/Chips";
+import SearchField from "../../components/UI/SearchField/SearchField";
+import ButtonBlack from "../../components/UI/Buttons/ButtonBlack/ButtonBlack";
+import Accordion from "../../components/Accordion/Accordion";
+import ModalChoose from "../../components/UI/Modals/ModalChoose/ModalChoose";
+import CategoriesAccordion from "../../components/CategoriesAccordion/CategoriesAccordion";
+import Chips from "../../components/Chips/Chips";
 import {Link} from "react-router-dom";
-import axios from 'axios';
-import LoadingAnimation from "../LoadingAnimation/LoadingAnimation";
+import axios from '../../services/ApiService';
+import LoadingAnimation from "../../components/LoadingAnimation/LoadingAnimation";
 
 
 
@@ -34,14 +34,9 @@ const Categories = () => {
     }
     let data = searchShops(categories, term);
 
-    var config = {
-        method: 'get',
-        url: 'https://localhost:44302/api/Portal/GetCategoriesAndGroups',
-        headers: { }
-    };
 
     useEffect(() => {
-        axios(config)
+        axios.get("/GetCategoriesAndGroups")
             .then(function (response) {
                 console.log(JSON.stringify(response.data));
                 setCategories(response.data)

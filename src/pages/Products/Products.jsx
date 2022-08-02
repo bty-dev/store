@@ -1,18 +1,18 @@
 import React, {useEffect} from 'react';
 import classes from "./Products.module.css";
-import SearchField from "../UI/SearchField/SearchField";
-import ButtonBlackEdit from "../UI/Buttons/ButtonBlackEdit/ButtonBlackEdit";
+import SearchField from "../../components/UI/SearchField/SearchField";
+import ButtonBlackEdit from "../../components/UI/Buttons/ButtonBlackEdit/ButtonBlackEdit";
 import {useState} from "react";
-import ProductListItem from "../ProductListItem/ProductListItem";
+import ProductListItem from "../../components/ProductListItem/ProductListItem";
 import Checkbox from '@mui/material/Checkbox';
-import Pagination from "../Pagination/Pagination";
+import Pagination from "../../components/Pagination/Pagination";
 import meat from "./meat.svg";
 import tomato from "./tomato.svg";
-import ModalAccept from "../UI/Modals/ModalAccept/ModalAccept";
-import Chips from "../Chips/Chips";
+import ModalAccept from "../../components/UI/Modals/ModalAccept/ModalAccept";
+import Chips from "../../components/Chips/Chips";
 import {Link} from "react-router-dom";
-import axios from 'axios';
-import LoadingAnimation from "../LoadingAnimation/LoadingAnimation";
+import axios from '../../services/ApiService';
+import LoadingAnimation from "../../components/LoadingAnimation/LoadingAnimation";
 
 
 const Products = () => {
@@ -27,16 +27,11 @@ const Products = () => {
         setModal(true);
     }
 
-    const config = {
-        method: 'get',
-        url: 'https://localhost:44302/api/Portal/GetGoods',
-        headers: { }
-    };
 
 
 
     useEffect(() => {
-        axios(config)
+        axios.get("/GetGoods")
             .then(function (response) {
                 console.log(JSON.stringify(response.data));
                 setProducts(response.data)

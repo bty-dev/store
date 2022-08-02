@@ -1,11 +1,11 @@
-import ShopsAndScales from "./components/ShopsAndScales/ShopsAndScales";
+import ShopsAndScales from "./pages/ShopsAndScales/ShopsAndScales";
 import ButtonBlack from "./components/UI/Buttons/ButtonBlack/ButtonBlack";
 import ButtonStroke from "./components/UI/Buttons/ButtonStroke/ButtonStroke";
 import SearchField from "./components/UI/SearchField/SearchField";
-import Products from "./components/Products/Products";
-import Categories from "./components/Categories/Categories";
+import Products from "./pages/Products/Products";
+import Categories from "./pages/Categories/Categories";
 import {Routes, Route, Link} from "react-router-dom";
-import OldScales from "./components/OldScales/OldScales";
+import OldScales from "./pages/OldScales/OldScales";
 
 
 function App() {

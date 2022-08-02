@@ -1,17 +1,16 @@
 import React, {useEffect, useState} from 'react';
 import classes from "./ShopsAndScales.module.css";
-import SearchField from "../UI/SearchField/SearchField";
-import ButtonBlack from "../UI/Buttons/ButtonBlack/ButtonBlack";
-import Accordion from "../Accordion/Accordion";
+import SearchField from "../../components/UI/SearchField/SearchField";
+import ButtonBlack from "../../components/UI/Buttons/ButtonBlack/ButtonBlack";
+import Accordion from "../../components/Accordion/Accordion";
 import {Modal} from "@mui/material";
-import ModalChoose from "../UI/Modals/ModalChoose/ModalChoose";
-import ButtonBlackEdit from "../UI/Buttons/ButtonBlackEdit/ButtonBlackEdit";
-import Pagination from "../Pagination/Pagination";
-import Chips from "../Chips/Chips";
+import ModalChoose from "../../components/UI/Modals/ModalChoose/ModalChoose";
+import ButtonBlackEdit from "../../components/UI/Buttons/ButtonBlackEdit/ButtonBlackEdit";
+import Pagination from "../../components/Pagination/Pagination";
+import Chips from "../../components/Chips/Chips";
 import {Link} from "react-router-dom";
-import {logDOM} from "@testing-library/react";
-import axios from 'axios';
-import LoadingAnimation from "../LoadingAnimation/LoadingAnimation";
+import axios from '../../services/ApiService'
+import LoadingAnimation from "../../components/LoadingAnimation/LoadingAnimation";
 
 
 const ShopsAndScales = () => {
@@ -39,24 +38,14 @@ const ShopsAndScales = () => {
         setTerm(term);
     }
     let data = searchShops(shops, term);
-    // useEffect(() => {
-    //     data = searchShops(shops, term);
-    //     console.log(data)
-    //     setForce(prevState => prevState + 1);
-    // }, [term])
 
-    const config = {
-        method: 'get',
-        url: 'https://localhost:44302/api/Portal/GetMarkets',
-
-    };
 
     useEffect(() => {
         getMarkets();
     }, [])
 
     const getMarkets = async () => {
-        axios(config)
+        axios.get('/GetMarkets')
             .then(function (response) {
                 console.log(JSON.stringify(response.data));
                 setShops(response.data)
@@ -69,24 +58,7 @@ const ShopsAndScales = () => {
     }
 
     const setDefaultCategory = async () => {
-        const config = {
-            method: 'post',
-            url: 'https://localhost:7246/api/test/setdefaultcategory',
-            headers: { },
-            data : {
-                scaleId: 1,
-                categoryId: 1,
-            }
-        };
 
-        axios(config)
-            .then(function (response) {
-                console.log(JSON.stringify(response.data));
-                console.log("Post completed")
-            })
-            .catch(function (error) {
-                console.log(error);
-            });
     }
 
     return (

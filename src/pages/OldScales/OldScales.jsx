@@ -1,11 +1,11 @@
 import React from 'react';
 import classes from "./OldScales.module.css";
 import {Link} from "react-router-dom";
-import Chips from "../Chips/Chips";
-import SearchField from "../UI/SearchField/SearchField";
-import ButtonBlack from "../UI/Buttons/ButtonBlack/ButtonBlack";
-import Accordion from "../Accordion/Accordion";
-import ModalChoose from "../UI/Modals/ModalChoose/ModalChoose";
+import Chips from "../../components/Chips/Chips";
+import SearchField from "../../components/UI/SearchField/SearchField";
+import ButtonBlack from "../../components/UI/Buttons/ButtonBlack/ButtonBlack";
+import Accordion from "../../components/Accordion/Accordion";
+import ModalChoose from "../../components/UI/Modals/ModalChoose/ModalChoose";
 
 
 const OldScales = () => {
