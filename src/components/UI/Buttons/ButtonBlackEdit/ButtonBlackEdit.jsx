@@ -1,5 +1,5 @@
 import React from 'react';
-import classes from "./ButtonBlackEdit.module.css";
+import classes from "./ButtonBlackEdit.module.scss";
 import icon from "./icon_edit.svg";
 import iconBlack from "./icon_edit_black.svg";
 

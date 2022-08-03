@@ -1,5 +1,5 @@
 import React from 'react';
-import classes from "./ProductListItem.module.css";
+import classes from "./ProductListItem.module.scss";
 import Checkbox from '@mui/material/Checkbox';
 
 import thumbnail from "./thumbnail.svg";

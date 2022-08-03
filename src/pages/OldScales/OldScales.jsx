@@ -1,5 +1,5 @@
 import React from 'react';
-import classes from "./OldScales.module.css";
+import classes from "./OldScales.module.scss";
 import {Link} from "react-router-dom";
 import Chips from "../../components/Chips/Chips";
 import SearchField from "../../components/UI/SearchField/SearchField";

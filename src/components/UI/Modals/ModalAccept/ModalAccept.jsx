@@ -1,5 +1,5 @@
 import React from 'react';
-import classes from "./ModalAccept.module.css";
+import classes from "./ModalAccept.module.scss";
 import Swal from 'sweetalert2';
 
 const ModalAccept = ({visible, setVisible, text}) => {

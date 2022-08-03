@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import classes from "./SearchField.module.css";
+import classes from "./SearchField.module.scss";
 
 import loup from './loup.svg'
 

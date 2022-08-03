@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import Checkbox, { CheckboxClasses } from '@mui/material/Checkbox';
-import classes from "./Accrodion.module.css";
+import classes from "./Accrodion.module.scss";
 import ButtonBlack from "../UI/Buttons/ButtonBlack/ButtonBlack";
 import {CSSTransition} from "react-transition-group";
 import icon from "./list_control.svg";
@@ -58,42 +58,14 @@ const Accordion = ({title, code, address, scales, setDefCat}: AccordionProps) =>
                                 <div className={classes.text__hint}>Статус <img className={classes.img} src={iconGray} alt="open"/></div>
                                 <div className={classes.text__hint}>Категории <img className={classes.img} src={iconGray} alt="open"/></div>
                             </div>
-                            {/* {scales.map(item => (<TableLine number={item.Number} api={item.IP} status={item.Status} type={item.Type}/>))} */}
-
-
-
-                            {/*<div className={classes.table__line}>*/}
-                            {/*    <div className={classes.text__value}>Tiger</div>*/}
-                            {/*    <div className={classes.text__value}>Sergeli12</div>*/}
-                            {/*    <div className={classes.text__value}>10.100.234.22</div>*/}
-                            {/*    <div className={classes.text__value}>Не загружено</div>*/}
-                            {/*    <div className={classes.text__value}>*/}
-                            {/*        <ButtonStroke>Выбрать</ButtonStroke>*/}
-
-                            {/*    </div>*/}
-                            {/*</div>*/}
-                            {/*<div className={classes.table__line}>*/}
-                            {/*    <div className={classes.text__value}>Tiger</div>*/}
-                            {/*    <div className={classes.text__value}>Sergeli12</div>*/}
-                            {/*    <div className={classes.text__value}>10.100.234.22</div>*/}
-                            {/*    <div className={classes.text__value}>Не загружено</div>*/}
-                            {/*    <div className={classes.text__value}>*/}
-                            {/*        <ButtonStroke>Выбрать</ButtonStroke>*/}
-                            {/*    </div>*/}
-                            {/*</div>*/}
+                            {scales.map(item => (<TableLine number={item.Number} api={item.IP} status={item.Status} type={item.Type}/>))}
                         </div>
 
                     : null
                     }
-
                 </div>
-
-
             </div>
-
         </div>
-
-
     );
 };
 
@@ -109,26 +81,6 @@ const TableLine = ({number, api, type, status}: tableLineProps) => {
     const [isModal, setModal] = useState(false);
     const setVisible = () => {
         setModal(true);
-
-        let config = {
-            method: 'post',
-            url: 'https://localhost:44302/api/Portal/SetGroupCategory',
-            headers: { },
-            data: {
-                groupId: 1,
-                categoryId: 1
-            },
-            withCredentials: true,
-        };
-
-        axios(config)
-            .then(function (response) {
-                console.log(JSON.stringify(response.data));
-                console.log("yspeshno")
-            })
-            .catch(function (error) {
-                console.log(error);
-            });
 
     }
     return (

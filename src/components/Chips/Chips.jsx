@@ -1,5 +1,5 @@
 import React from 'react';
-import classes from "./Chips.module.css";
+import classes from "./Chips.module.scss";
 
 
 const Chips = ({children}) => {

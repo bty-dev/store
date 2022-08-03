@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import classes from "./ModalSetCategory.module.css";
+import classes from "./ModalSetCategory.module.scss";
 import axios from 'axios';
 
 
