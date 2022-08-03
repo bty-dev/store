@@ -12,8 +12,9 @@
     align-items: center;
     transition: .3s;
     text-decoration: none;
-}
-.chips:hover {
-    background-color: #000;
-    color: #F2F5FA;
+
+    &:hover {
+        background-color: #000;
+        color: #F2F5FA;
+    }
 }

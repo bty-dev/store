@@ -12,6 +12,8 @@ import Chips from "../Chips/Chips";
 import {green} from "@mui/material/colors";
 import ModalSetCategory from "../UI/Modals/ModalSetCategory/ModalSetCategory";
 import axios from "axios";
+import RadioButtonUncheckedIcon from '@mui/icons-material/RadioButtonUnchecked';
+import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 
 const Accordion = ({title, code, address, scales, setDefCat}) => {
     const [isOpen, setOpen] = useState(false);
@@ -26,7 +28,7 @@ const Accordion = ({title, code, address, scales, setDefCat}) => {
 
         <div>
             <div className={classes.container}>
-                <Checkbox classes={classes.checkbox} style={{alignSelf: `${isOpen ? "flex-start" : "center"}`}}/>
+                <Checkbox icon={<RadioButtonUncheckedIcon />} checkedIcon={<CheckCircleOutlineIcon />} classes={classes.checkbox} style={{alignSelf: `${isOpen ? "flex-start" : "center"}`}}/>
                 <div className={classes.wrapper}>
                     <div className={classes.main}>
                         <div className={classes.text__hint}>Код магазина</div>

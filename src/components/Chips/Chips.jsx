@@ -2,9 +2,9 @@ import React from 'react';
 import classes from "./Chips.module.scss";
 
 
-const Chips = ({children}) => {
+const Chips = ({children, ...props}) => {
     return (
-        <div className={classes.chips}>
+        <div className={classes.chips} {...props}>
             {children}
         </div>
     );

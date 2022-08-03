@@ -79,7 +79,7 @@ const ShopsAndScales = () => {
                     </div>
 
                 </div>
-                {isLoading ? <LoadingAnimation/> : data.map((item) => <Accordion setDefCat={setDefaultCategory} title={item.Name} key ={item.MarketCode} code={item.MarketCode} address={item.Address} scales={item.Scales}/>)}
+                {isLoading ? <LoadingAnimation/> : data.map((item) => <Accordion setDefCat={setDefaultCategory} title={item.Name} key ={item.MarketCode} code={item.Id} address={item.Address} scales={item.Scales}/>)}
                 <ModalChoose visible={isModal} setVisible={setModal}/>
             </div>
         </div>
