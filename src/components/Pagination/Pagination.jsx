@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import leftArrow from "./left_arrow.svg";
 import rightArrow from "./right_arrow.svg";
-import classes from "./Pagination.module.css";
+import classes from "./Pagination.module.scss";
 
 
 const Pagination = () => {
