@@ -31,7 +31,7 @@ const Products = () => {
 
 
     useEffect(() => {
-        axios.get("/GetGoods")
+        axios.get("/GetPage?page=1")
             .then(function (response) {
                 console.log(JSON.stringify(response.data));
                 setProducts(response.data)
@@ -56,6 +56,18 @@ const Products = () => {
     }
     let data = searchProducts(products, term);
 
+    const setPageNum = (page) => {
+        axios.get(`/GetPage?page=${page}`)
+            .then(function (response) {
+                console.log(JSON.stringify(response.data));
+                setProducts(response.data)
+                setLoading(false);
+                console.log(page)
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+    }
 
     return (
         <div className={classes.page__cont}>
@@ -88,7 +100,7 @@ const Products = () => {
 
 
                 <div className={classes.pagination}>
-                    <Pagination/>
+                    <Pagination setPageNum={setPageNum}/>
                 </div>
                 <ModalAccept visible={isModal} setVisible={setModal} text="Вы уверенны, что хотите изменить фото товара?"/>
 

@@ -70,7 +70,6 @@ const TableLine = ({number, api, type, status}) => {
     const [isModal, setModal] = useState(false);
     const setVisible = () => {
         setModal(true);
-
     }
     return (
         <div className={classes.table__line}>
