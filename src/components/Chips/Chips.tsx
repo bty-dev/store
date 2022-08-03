@@ -1,8 +1,10 @@
 import React from 'react';
 import classes from "./Chips.module.scss";
 
-
-const Chips = ({children}) => {
+interface ChipsProps {
+    children: React.ReactChild | React.ReactNode
+}
+const Chips: React.FC<ChipsProps> = ({children}) => {
     return (
         <div className={classes.chips}>
             {children}
