@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react';
-import classes from "./Products.module.css";
+import classes from "./Products.module.scss";
 import SearchField from "../../components/UI/SearchField/SearchField";
 import ButtonBlackEdit from "../../components/UI/Buttons/ButtonBlackEdit/ButtonBlackEdit";
 import {useState} from "react";
