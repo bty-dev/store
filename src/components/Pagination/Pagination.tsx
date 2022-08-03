@@ -7,7 +7,7 @@ import classes from "./Pagination.module.scss";
 const Pagination = () => {
     const [selected, setSelected] = useState(1);
 
-    const setPage = (page) => {
+    const setPage = (page: number) => {
         setSelected(page);
     }
 
