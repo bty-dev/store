@@ -5,8 +5,15 @@ import Checkbox from '@mui/material/Checkbox';
 import thumbnail from "./thumbnail.svg";
 import Chips from "../Chips/Chips";
 
-
-const ProductListItem = ({img, title, price, category, group, PLU}) => {
+interface ProductListItemProps {
+    img: string;
+    title: string;
+    price: number;
+    category: string;
+    group: Array<any>;
+    PLU: string;
+}
+const ProductListItem: React.FC<ProductListItemProps> = ({img, title, price, category, group, PLU}) => {
     return (
         <div className={classes.container}>
             <Checkbox/>

@@ -9,8 +9,11 @@ import ModalChoose from "../UI/Modals/ModalChoose/ModalChoose";
 import ModalAccept from "../UI/Modals/ModalAccept/ModalAccept";
 import ModalSetCategory from "../UI/Modals/ModalSetCategory/ModalSetCategory";
 import {CSSTransition} from "react-transition-group";
-
-const CategoriesAccordion = ({title, groups}) => {
+interface CategoriesAccordionProps {
+    title?: string;
+    groups: Array<any>;
+}
+const CategoriesAccordion = ({title, groups}: CategoriesAccordionProps) => {
     const [isOpen, setOpen] = useState(false);
     const [isModal, setModal] = useState(false);
     const [view, setView] = useState(false);
@@ -83,7 +86,7 @@ const CategoriesAccordion = ({title, groups}) => {
 export default CategoriesAccordion;
 
 
-const TableLine = ({groups}) => {
+const TableLine = ({groups}: CategoriesAccordionProps) => {
     const [isOpen, setOpen] = useState(false);
     const [isModal, setModal] = useState(false);
     const [view, setView] = useState(false);
