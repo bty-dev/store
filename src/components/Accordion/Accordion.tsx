@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import Checkbox from '@mui/material/Checkbox';
+import Checkbox, { CheckboxClasses } from '@mui/material/Checkbox';
 import classes from "./Accrodion.module.scss";
 import ButtonBlack from "../UI/Buttons/ButtonBlack/ButtonBlack";
 import {CSSTransition} from "react-transition-group";
@@ -15,7 +15,14 @@ import axios from "axios";
 import RadioButtonUncheckedIcon from '@mui/icons-material/RadioButtonUnchecked';
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 
-const Accordion = ({title, code, address, scales, setDefCat}) => {
+interface AccordionProps {
+    title: string;
+    code: string;
+    address: string;
+    scales: Array<any>;
+    setDefCat: string;
+}
+const Accordion = ({title, code, address, scales, setDefCat}: AccordionProps) => {
     const [isOpen, setOpen] = useState(false);
 
 
@@ -23,12 +30,12 @@ const Accordion = ({title, code, address, scales, setDefCat}) => {
         setOpen(!isOpen)
         console.log(isOpen)
     }
-
+    console.log(classes);
     return (
 
         <div>
             <div className={classes.container}>
-                <Checkbox icon={<RadioButtonUncheckedIcon />} checkedIcon={<CheckCircleOutlineIcon />} classes={classes.checkbox} style={{alignSelf: `${isOpen ? "flex-start" : "center"}`}}/>
+                <Checkbox icon={<RadioButtonUncheckedIcon />} checkedIcon={<CheckCircleOutlineIcon />} className={classes.checkbox} style={{alignSelf: `${isOpen ? "flex-start" : "center"}`}}/>
                 <div className={classes.wrapper}>
                     <div className={classes.main}>
                         <div className={classes.text__hint}>Код магазина</div>
@@ -66,9 +73,14 @@ const Accordion = ({title, code, address, scales, setDefCat}) => {
 };
 
 export default Accordion;
+interface tableLineProps {
+    number: number;
+    api: string;
+    type: string;
+    status: boolean;
+}
 
-
-const TableLine = ({number, api, type, status}) => {
+const TableLine = ({number, api, type, status}: tableLineProps) => {
     const [isModal, setModal] = useState(false);
     const setVisible = () => {
         setModal(true);
