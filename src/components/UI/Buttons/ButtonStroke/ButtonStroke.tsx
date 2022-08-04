@@ -1,7 +1,10 @@
 import React from 'react';
 import classes from "./ButtonStroke.module.scss";
-
-const ButtonStroke = ({children, ...props}) => {
+interface ButtonStrokeProps {
+    children: React.ReactChild | React.ReactNode;
+    onClick?: () => void;
+}
+const ButtonStroke: React.FC<ButtonStrokeProps> = ({children, ...props}) => {
     return (
         <button className={classes.container} {...props}>
             {children}

@@ -3,7 +3,7 @@ import classes from "./ButtonBlackEdit.module.scss";
 import icon from "./icon_edit.svg";
 import iconBlack from "./icon_edit_black.svg";
 
-const ButtonBlackEdit = (props) => {
+const ButtonBlackEdit = ({...props}) => {
     return (
         <button {...props} className={classes.main}>
             Изменить картинку ✎
