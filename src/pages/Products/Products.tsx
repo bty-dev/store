@@ -14,8 +14,16 @@ import {Link} from "react-router-dom";
 import axios from '../../services/ApiService';
 import LoadingAnimation from "../../components/LoadingAnimation/LoadingAnimation";
 
+interface ProductItem {
+    Id: number;
+    Name: string;
+    PLU: string;
+    Price: number;
+    CategoryName: string | null;
+    GroupPLU: number | null;
+}
 
-const Products = () => {
+const Products: React.FC = () => {
     const [isLoading, setLoading] = useState(true);
 
     const [products, setProducts] = useState([
@@ -43,20 +51,20 @@ const Products = () => {
     }, [])
 
     const [term, setTerm] = useState("");
-    const searchProducts = (items, term) => {
+    const searchProducts = (items: Array<ProductItem>, term: string): Array<ProductItem> => {
         if (term.length === 0) return items;
 
-        return items.filter(item => {
+        return items.filter((item) => {
             return item.Name.toLowerCase().indexOf(term.toLowerCase()) > -1;
         })
     }
 
-    const onUpdateSearch = (term) => {
+    const onUpdateSearch = (term: string) => {
         setTerm(term);
     }
-    let data = searchProducts(products, term);
+    let data: Array<ProductItem> = searchProducts(products, term);
 
-    const setPageNum = (page) => {
+    const setPageNum = (page: number) => {
         axios.get(`/GetPage?page=${page}`)
             .then(function (response) {
                 console.log(JSON.stringify(response.data));
@@ -88,23 +96,17 @@ const Products = () => {
                     <div className={classes.btns__top}>
                         <ButtonBlackEdit onClick={setVisible}/>
                     </div>
-
                 </div>
                 <div className={classes.category__title}>
                     <Checkbox/>Овощи
                 </div>
-
                 {isLoading ? <LoadingAnimation/> : data.map(item => (
                     <ProductListItem key={item.Id} img={tomato} title={item.Name} price={item.Price} category={item.CategoryName} group={item.GroupPLU} PLU={item.PLU}/>
                 ))}
-
-
                 <div className={classes.pagination}>
                     <Pagination setPageNum={setPageNum}/>
                 </div>
                 <ModalAccept visible={isModal} setVisible={setModal} text="Вы уверенны, что хотите изменить фото товара?"/>
-
-
             </div>
         </div>
     );

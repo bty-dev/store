@@ -8,7 +8,7 @@ import Accordion from "../../components/Accordion/Accordion";
 import ModalChoose from "../../components/UI/Modals/ModalChoose/ModalChoose";
 
 
-const OldScales = () => {
+const OldScales: React.FC = () => {
     return (
         <div className={classes.page__cont}>
             <div className={classes.page__title}>Старые весы</div>
