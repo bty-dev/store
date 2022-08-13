@@ -3,13 +3,7 @@ import classes from "./ModalChoose.module.scss";
 import Swal from 'sweetalert2';
 
 
-const itemList = [
-    {id: 1, order: 1, value: "Мясо"},
-    {id: 2, order: 2, value: "Фрукты"},
-    {id: 3, order: 3, value: "Овощи"},
-    {id: 4, order: 4, value: "Сладости"},
-    {id: 5, order: 5, value: "Выпечка"},
-]
+
 
 const ModalChoose = ({visible, setVisible}) => {
     const rootClasses = [classes.modal];
@@ -75,7 +69,8 @@ const ModalChoose = ({visible, setVisible}) => {
                               onDragOver={(e) => dragOverHandler(e)}
                               onDrop={(e) => dropHandler(e, card)}
                               draggable={true}
-                              className={classes.line} className={classes.btn_category}>{index + 1}) {card.value}</div>
+                              // className={classes.line}
+                        className={classes.btn_category}>{index + 1}) {card.value}</div>
                     </div>
 
                 ))}

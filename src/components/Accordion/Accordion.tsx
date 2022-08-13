@@ -20,7 +20,7 @@ interface AccordionProps {
     code: string;
     address: string;
     scales: Array<any>;
-    setDefCat: Function;
+    setDefCat?: () => void;
 }
 const Accordion = ({title, code, address, scales, setDefCat}: AccordionProps) => {
     const [isOpen, setOpen] = useState(false);
@@ -61,7 +61,7 @@ const Accordion = ({title, code, address, scales, setDefCat}: AccordionProps) =>
                                 <div className={classes.text__hint}>Статус <img className={classes.img} src={iconGray} alt="open"/></div>
                                 <div className={classes.text__hint}>Категории <img className={classes.img} src={iconGray} alt="open"/></div>
                             </div>
-                            {scales.map(item => (<TableLine number={item.Number} api={item.IP} status={item.Status} type={item.Type}/>))}
+                            {scales.map(item => (<TableLine scaleId={item.Id} number={item.Number} api={item.IP} status={item.Status} type={item.Type}/>))}
                         </div>
 
                     : null
@@ -78,9 +78,20 @@ interface tableLineProps {
     api: string;
     type: string;
     status: boolean;
+    scaleId: number;
 }
 
-const TableLine = ({number, api, type, status}: tableLineProps) => {
+const setDefaultCategoryForScale = async (scaleId: number, categoryId: number) => {
+    axios.post(`https://localhost:44302/api/Portal/SetDefaultCategory?scaleId=${scaleId}&categoryId=${categoryId}`)
+        .then(function (response) {
+            console.log(response.status);
+        })
+        .catch(function (error) {
+            console.log(error);
+        });
+}
+
+const TableLine = ({number, api, type, status, scaleId}: tableLineProps) => {
     const [isModal, setModal] = useState(false);
     const setVisible = () => {
         setModal(true);
@@ -94,7 +105,7 @@ const TableLine = ({number, api, type, status}: tableLineProps) => {
             <div className={classes.text__value}>
                 <ButtonStroke onClick={setVisible}>Выбрать</ButtonStroke>
             </div>
-            <ModalSetCategory visible={isModal} setVisible={setModal}/>
+            <ModalSetCategory scaleId={scaleId} itemNumber={1} setCategoryForScale={setDefaultCategoryForScale} visible={isModal} setVisible={setModal}/>
         </div>
     )
 }

@@ -40,6 +40,10 @@ const Categories: React.FC = () => {
 
 
     useEffect(() => {
+       getCategoriesAndGroups();
+    }, [])
+
+    const getCategoriesAndGroups = async() => {
         axios.get("/GetCategoriesAndGroups")
             .then(function (response) {
                 console.log(JSON.stringify(response.data));
@@ -49,7 +53,7 @@ const Categories: React.FC = () => {
             .catch(function (error) {
                 console.log(error);
             });
-    }, [])
+    }
 
     return (
         <div className={classes.page__cont}>
@@ -63,7 +67,7 @@ const Categories: React.FC = () => {
                     <SearchField hint="Начните вводить название категории" onUpdateSearch={onUpdateSearch}/>
 
                 </div>
-                {isLoading ? <LoadingAnimation/> : data.map((item) => <CategoriesAccordion title={item.Name} groups={item.GroupsPLU} key ={item.Id}/>)}
+                {isLoading ? <LoadingAnimation/> : data.map((item) => <CategoriesAccordion getCategories={getCategoriesAndGroups} title={item.Name} groups={item.GroupsPLU} key ={item.Id}/>)}
 
             </div>
 

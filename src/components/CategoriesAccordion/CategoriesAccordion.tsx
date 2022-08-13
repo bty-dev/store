@@ -9,11 +9,14 @@ import ModalChoose from "../UI/Modals/ModalChoose/ModalChoose";
 import ModalAccept from "../UI/Modals/ModalAccept/ModalAccept";
 import ModalSetCategory from "../UI/Modals/ModalSetCategory/ModalSetCategory";
 import {CSSTransition} from "react-transition-group";
+import axios from "axios";
+import {log} from "util";
 interface CategoriesAccordionProps {
     title?: string;
     groups: Array<any>;
+    getCategories: () => void;
 }
-const CategoriesAccordion = ({title, groups}: CategoriesAccordionProps) => {
+const CategoriesAccordion = ({title, groups, getCategories}: CategoriesAccordionProps) => {
     const [isOpen, setOpen] = useState(false);
     const [isModal, setModal] = useState(false);
     const [view, setView] = useState(false);
@@ -47,7 +50,7 @@ const CategoriesAccordion = ({title, groups}: CategoriesAccordionProps) => {
                         ?
 
                         <div className={classes.table__low}>
-                                <TableLine groups={groups}/>
+                                <TableLine getCategories={getCategories} groups={groups}/>
 
 
 
@@ -78,7 +81,7 @@ const CategoriesAccordion = ({title, groups}: CategoriesAccordionProps) => {
 
 
             </div>
-            <ModalSetCategory visible={view} setVisible={setView}/>
+
         </div>
     );
 };
@@ -86,7 +89,7 @@ const CategoriesAccordion = ({title, groups}: CategoriesAccordionProps) => {
 export default CategoriesAccordion;
 
 
-const TableLine = ({groups}: CategoriesAccordionProps) => {
+const TableLine = ({groups, getCategories}: CategoriesAccordionProps) => {
     const [isOpen, setOpen] = useState(false);
     const [isModal, setModal] = useState(false);
     const [view, setView] = useState(false);
@@ -99,18 +102,31 @@ const TableLine = ({groups}: CategoriesAccordionProps) => {
         setModal(true);
         setView(true);
 
+
+
+    }
+
+    const setCategoryForGroup = async (groupId: number, categoryId: number) => {
+        axios.post(`https://localhost:44302/api/Portal/SetGroupCategory?groupId=${groupId}&categoryId=${categoryId}`)
+            .then(function (response) {
+                console.log(response.status);
+                getCategories();
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
     }
 
     return (
         <>
-            {groups.map(item => (
+            {groups.map((item, index) => (
                 <div className={classes.table__line}>
                     <ModalAccept visible={isModal} setVisible={setModal} text="Вы уверенны, что хотите изменить категорию этой группы?"/>
                     <div className={classes.text__value}>{item}</div>
                     <div className={classes.text__value}>
                         <ButtonBlack onClick={setVisible}>Указать категорию</ButtonBlack>
                     </div>
-                    <ModalSetCategory visible={view} setVisible={setView}/>
+                    <ModalSetCategory setCategoryForGroup={setCategoryForGroup} visible={view} setVisible={setView} itemNumber={item} groupIndex={index}/>
                 </div>
             ))}
 
