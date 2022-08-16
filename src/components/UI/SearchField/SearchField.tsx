@@ -1,13 +1,14 @@
-import React, {useState} from 'react';
+import React, {useState, SyntheticEvent} from 'react';
+// import React, { Component, SyntheticEvent } from 'react';
 import classes from "./SearchField.module.scss";
 
 import loup from './loup.svg'
 
-const SearchField = (props) => {
+const SearchField = ({...props}) => {
     const [term, setTerm] = useState("");
 
-    const onUpdateSearch = (e) => {
-        const term = e.target.value;
+    const onUpdateSearch = (e: React.ChangeEvent<HTMLInputElement>): void => {
+        const term = (e.target as HTMLInputElement).value ;
         setTerm(term);
         props.onUpdateSearch(term);
     }

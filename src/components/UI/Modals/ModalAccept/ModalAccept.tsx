@@ -1,8 +1,12 @@
 import React from 'react';
 import classes from "./ModalAccept.module.scss";
 import Swal from 'sweetalert2';
-
-const ModalAccept = ({visible, setVisible, text}) => {
+interface ModalAcceptProps {
+    visible: boolean;
+    setVisible: (vis: boolean) => void;
+    text: string;
+}
+const ModalAccept = ({visible, setVisible, text}: ModalAcceptProps) => {
     const rootClasses = [classes.modal];
     if (visible) {
         rootClasses.push(classes.active);

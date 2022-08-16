@@ -3,7 +3,7 @@ import classes from "./ModalSetCategory.module.scss";
 import axios from 'axios';
 
 
-const ModalSetCategory = ({visible, setVisible}) => {
+const ModalSetCategory = ({visible, setVisible}: {visible: boolean, setVisible(vis: boolean): void}) => {
     const rootClasses = [classes.modal];
     if (visible) {
         rootClasses.push(classes.active);
@@ -45,7 +45,9 @@ const ModalSetCategory = ({visible, setVisible}) => {
                 <div style={{color: "#A7A7A7", marginBottom: 20}}></div>
                 {cardList.map((card, index) => (
                     <div>
-                        <div onClick={() => setVisible(false)} className={classes.line} className={classes.btn_category}>{card.Id}) {card.Name}</div>
+                        <div onClick={() => setVisible(false)}
+                        // className={classes.line}
+                        className={classes.btn_category}>{card.id}) {card.value}</div>
                     </div>
 
                 ))}
