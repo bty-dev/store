@@ -1,6 +1,5 @@
 import React, {useState} from 'react';
 import classes from "./CategoriesAccordion.module.scss";
-import './CategoriesAccordionAll.scss';
 import ButtonBlack from "../UI/Buttons/ButtonBlack/ButtonBlack";
 import iconOpen from "./list_control_open.svg";
 import icon from "./list_control.svg";

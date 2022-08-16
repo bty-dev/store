@@ -12,6 +12,9 @@ import Chips from "../Chips/Chips";
 import {green} from "@mui/material/colors";
 import ModalSetCategory from "../UI/Modals/ModalSetCategory/ModalSetCategory";
 import axios from "axios";
+import RadioButtonUncheckedIcon from '@mui/icons-material/RadioButtonUnchecked';
+import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
+
 interface AccordionProps {
     title: string;
     code: string;
@@ -32,7 +35,7 @@ const Accordion = ({title, code, address, scales, setDefCat}: AccordionProps) =>
 
         <div>
             <div className={classes.container}>
-                <Checkbox className={classes.checkbox} style={{alignSelf: `${isOpen ? "flex-start" : "center"}`}}/>
+                <Checkbox icon={<RadioButtonUncheckedIcon />} checkedIcon={<CheckCircleOutlineIcon />} className={classes.checkbox} style={{alignSelf: `${isOpen ? "flex-start" : "center"}`}}/>
                 <div className={classes.wrapper}>
                     <div className={classes.main}>
                         <div className={classes.text__hint}>Код магазина</div>
@@ -81,7 +84,6 @@ const TableLine = ({number, api, type, status}: tableLineProps) => {
     const [isModal, setModal] = useState(false);
     const setVisible = () => {
         setModal(true);
-
     }
     return (
         <div className={classes.table__line}>
