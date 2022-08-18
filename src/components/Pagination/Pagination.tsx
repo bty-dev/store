@@ -3,8 +3,12 @@ import leftArrow from "./left_arrow.svg";
 import rightArrow from "./right_arrow.svg";
 import classes from "./Pagination.module.scss";
 
+interface PaginationProps {
+    setPageNum: Function
+}
 
-const Pagination = ({setPageNum}: any) => {
+
+const Pagination = ({setPageNum}: PaginationProps) => {
     const [selected, setSelected] = useState(1);
 
     const setPage = (page: number) => {

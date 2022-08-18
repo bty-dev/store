@@ -10,9 +10,13 @@ import {Link} from "react-router-dom";
 import axios from '../../services/ApiService';
 import LoadingAnimation from "../../components/LoadingAnimation/LoadingAnimation";
 
+interface CategoriesItem {
+    Id: number;
+    Name: string;
+    GroupsPLU: Array<number>;
+}
 
-
-const Categories = () => {
+const Categories: React.FC = () => {
     const [isLoading, setLoading] = useState(true);
     const [forceUpdate, setForce] = useState(0);
     const [categories, setCategories] = useState([
@@ -21,15 +25,15 @@ const Categories = () => {
     const [term, setTerm] = useState("");
 
 
-    const searchShops = (items, term) => {
+    const searchShops = (items: Array<CategoriesItem>, term: string): Array<CategoriesItem> => {
         if (term.length === 0) return items;
 
-        return items.filter(item => {
+        return items.filter((item) => {
             return item.Name.toLowerCase().indexOf(term.toLowerCase()) > -1;
         })
     }
 
-    const onUpdateSearch = (term) => {
+    const onUpdateSearch = (term: string) => {
         setTerm(term);
     }
     let data = searchShops(categories, term);

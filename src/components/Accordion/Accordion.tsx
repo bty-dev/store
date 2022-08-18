@@ -20,7 +20,7 @@ interface AccordionProps {
     code: string;
     address: string;
     scales: Array<any>;
-    setDefCat: string;
+    setDefCat: Function;
 }
 const Accordion = ({title, code, address, scales, setDefCat}: AccordionProps) => {
     const [isOpen, setOpen] = useState(false);

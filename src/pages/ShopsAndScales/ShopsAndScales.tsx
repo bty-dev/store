@@ -12,8 +12,25 @@ import {Link} from "react-router-dom";
 import axios from '../../services/ApiService'
 import LoadingAnimation from "../../components/LoadingAnimation/LoadingAnimation";
 
+interface ShopItem {
+    Id: string;
+    MarketCode: null;
+    Name: string;
+    Address: string;
+    Scales: Array<any>;
+}
 
-const ShopsAndScales = () => {
+interface ScaleItem {
+    Id: number;
+    MarketID: string;
+    Type: string;
+    Number: string;
+    IP: string;
+    Status: boolean;
+    CategoryName: string
+}
+
+const ShopsAndScales: React.FC = () => {
     const [isLoading, setLoading] = useState(true);
     const [isModal, setModal] = useState(false);
     const [forceUpdate, setForce] = useState(0);
@@ -26,7 +43,7 @@ const ShopsAndScales = () => {
         setModal(true);
     }
 
-    const searchShops = (items, term) => {
+    const searchShops = (items: Array<ShopItem>, term: string): Array<ShopItem> => {
         if (term.length === 0) return items;
 
         return items.filter(item => {
@@ -34,7 +51,7 @@ const ShopsAndScales = () => {
         })
     }
 
-    const onUpdateSearch = (term) => {
+    const onUpdateSearch = (term: string) => {
         setTerm(term);
     }
     let data = searchShops(shops, term);
