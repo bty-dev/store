@@ -4,7 +4,7 @@ import rightArrow from "./right_arrow.svg";
 import classes from "./Pagination.module.scss";
 
 
-const Pagination = ({setPageNum}) => {
+const Pagination = ({setPageNum}: any) => {
     const [selected, setSelected] = useState(1);
 
     const setPage = (page: number) => {
