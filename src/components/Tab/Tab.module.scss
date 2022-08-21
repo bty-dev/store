@@ -1,0 +1,18 @@
+@import "../../pages/_variables";
+
+.main {
+  cursor: pointer;
+  background-color: $page-main-background-color;
+  border-top-right-radius: 20px;
+  border-top-left-radius: 20px;
+  font-size: 15px;
+  color: #000;
+  transition: .3s;
+  padding: 10px 15px 0 15px;
+  font-weight: bold;
+
+
+  &:hover {
+    transform: scale(1.1);
+  }
+}

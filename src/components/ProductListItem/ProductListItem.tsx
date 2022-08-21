@@ -13,7 +13,11 @@ interface ProductListItemProps {
     group: number | null;
     PLU: string;
 }
+
+
+
 const ProductListItem: React.FC<ProductListItemProps> = ({img, title, price, category, group, PLU}) => {
+    
     return (
         <div className={classes.container}>
             <Checkbox/>

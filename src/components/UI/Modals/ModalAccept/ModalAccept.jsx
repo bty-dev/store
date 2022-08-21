@@ -17,7 +17,7 @@ const ModalAccept = ({visible, setVisible, text}) => {
                     <div onClick={() => {
                         setVisible(false)
                         Swal.fire({
-                            position: 'top-end',
+                            position: 'center',
                             icon: 'success',
                             title: 'Сохранено!',
                             showConfirmButton: false,

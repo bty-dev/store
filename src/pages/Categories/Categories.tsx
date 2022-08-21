@@ -9,6 +9,7 @@ import Chips from "../../components/Chips/Chips";
 import {Link} from "react-router-dom";
 import axios from '../../services/ApiService';
 import LoadingAnimation from "../../components/LoadingAnimation/LoadingAnimation";
+import Tab from "../../components/Tab/Tab";
 
 interface CategoriesItem {
     Id: number;
@@ -59,8 +60,9 @@ const Categories: React.FC = () => {
         <div className={classes.page__cont}>
             <div className={classes.page__title}>Категории</div>
             <div className={classes.nav__btns}>
-                <Link style={{ textDecoration: 'none' }} to="/"><Chips>Весы</Chips></Link>
-                <Link to="/categories"><Chips>Категории</Chips></Link>
+                <Link style={{ textDecoration: 'none' }} to="/"><Tab styles={{backgroundColor: "#D9D9D9", pointerEvents: "none"}}>Весы</Tab></Link>
+                <Link style={{ textDecoration: 'none', marginTop: 8 }} to="/categories"><Tab>Категории</Tab></Link>
+                <Link style={{ textDecoration: 'none' }} to="/oldScales"><Tab styles={{backgroundColor: "#D9D9D9", pointerEvents: "none"}}>Старые весы</Tab></Link>
             </div>
             <div className={classes.page__main}>
                 <div className={classes.main__top__panel}>

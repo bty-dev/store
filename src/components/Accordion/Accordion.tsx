@@ -21,8 +21,9 @@ interface AccordionProps {
     address: string;
     scales: Array<any>;
     setDefCat?: () => void;
+    setCheckedState: () => void;
 }
-const Accordion = ({title, code, address, scales, setDefCat}: AccordionProps) => {
+const Accordion = ({title, code, address, scales, setDefCat, setCheckedState}: AccordionProps) => {
     const [isOpen, setOpen] = useState(false);
 
 
@@ -35,7 +36,7 @@ const Accordion = ({title, code, address, scales, setDefCat}: AccordionProps) =>
 
         <div>
             <div className={classes.container}>
-                <Checkbox icon={<RadioButtonUncheckedIcon />} checkedIcon={<CheckCircleOutlineIcon />} className={classes.checkbox} style={{alignSelf: `${isOpen ? "flex-start" : "center"}`}}/>
+                <Checkbox onClick={setCheckedState} icon={<RadioButtonUncheckedIcon />} checkedIcon={<CheckCircleOutlineIcon />} className={classes.checkbox} style={{alignSelf: `${isOpen ? "flex-start" : "center"}`}}/>
                 <div className={classes.wrapper}>
                     <div className={classes.main}>
                         <div className={classes.text__hint}>Код магазина</div>

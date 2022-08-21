@@ -18,11 +18,11 @@ const ModalSetCategory: React.FC<ModalSetCategoryProps> = ({visible, setVisible,
         rootClasses.push(classes.active);
     }
     const [cardList, setCardList] = useState([
-        {Id: 1, order: 1, Name: "Мясо"},
-        {Id: 2, order: 2, Name: "Фрукты"},
-        {Id: 3, order: 3, Name: "Овощи"},
-        {Id: 4, order: 4, Name: "Сладости"},
-        {Id: 5, order: 5, Name: "Выпечка"},
+        {Id: 1, order: 1, RuName: "Мясо"},
+        {Id: 2, order: 2, RuName: "Фрукты"},
+        {Id: 3, order: 3, RuName: "Овощи"},
+        {Id: 4, order: 4, RuName: "Сладости"},
+        {Id: 5, order: 5, RuName: "Выпечка"},
     ])
 
     useEffect(() => {
@@ -62,7 +62,7 @@ const ModalSetCategory: React.FC<ModalSetCategoryProps> = ({visible, setVisible,
                             if (setCategoryForScale !== undefined) setCategoryForScale(scaleId, card.Id);
 
 
-                        }} className={classes.btn_category}>{card.Id}) {card.Name}</div>
+                        }} className={classes.btn_category}>{card.Id}) {card.RuName}</div>
                     </div>
 
                 ))}

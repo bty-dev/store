@@ -13,6 +13,7 @@ import Chips from "../../components/Chips/Chips";
 import {Link} from "react-router-dom";
 import axios from '../../services/ApiService';
 import LoadingAnimation from "../../components/LoadingAnimation/LoadingAnimation";
+import Tab from "../../components/Tab/Tab";
 
 interface ProductItem {
     Id: number;
@@ -39,7 +40,7 @@ const Products: React.FC = () => {
 
 
     useEffect(() => {
-        axios.get("/GetPage?page=1")
+        axios.get("/GetPage?page=1&marketId=D001")
             .then(function (response) {
                 console.log(JSON.stringify(response.data));
                 setProducts(response.data)
@@ -64,8 +65,8 @@ const Products: React.FC = () => {
     }
     let data: Array<ProductItem> = searchProducts(products, term);
 
-    const setPageNum = (page: number) => {
-        axios.get(`/GetPage?page=${page}`)
+    const setPageNum = (page: number, marketId: string) => {
+        axios.get(`/GetPage?page=${page}&marketId=${marketId}`)
             .then(function (response) {
                 console.log(JSON.stringify(response.data));
                 setProducts(response.data)
@@ -81,8 +82,9 @@ const Products: React.FC = () => {
         <div className={classes.page__cont}>
             <div className={classes.page__title}>Товары: <span className={classes.shop__title}>"Тестовый магазин 02"</span></div>
             <div className={classes.nav__btns}>
-                <Link style={{ textDecoration: 'none' }} to="/"><Chips>Весы</Chips></Link>
-                <Link style={{ textDecoration: 'none' }} to="/categories"><Chips>Категории</Chips></Link>
+                <Link style={{ textDecoration: 'none' }} to="/"><Tab styles={{backgroundColor: "#D9D9D9", pointerEvents: "none"}}>Весы</Tab></Link>
+                <Link style={{ textDecoration: 'none' }} to="/categories"><Tab styles={{backgroundColor: "#D9D9D9", pointerEvents: "none"}}>Категории</Tab></Link>
+                <Link style={{ textDecoration: 'none' }} to="/oldScales"><Tab styles={{backgroundColor: "#D9D9D9", pointerEvents: "none"}}>Старые весы</Tab></Link>
             </div>
             <div className={classes.page__main}>
                 <div className={classes.main__top__panel}>
