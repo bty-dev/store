@@ -33,7 +33,6 @@ export const getGategoriesAndGroups = async () => {
         })
         .catch(function (error) {
             console.log(error);
-            let a = 2
         });
 }
 export const setDefaultCategory = async (scaleId: number, categoryId: number) => {
