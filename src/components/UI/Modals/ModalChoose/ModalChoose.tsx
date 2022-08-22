@@ -3,9 +3,12 @@ import classes from "./ModalChoose.module.scss";
 import Swal from 'sweetalert2';
 
 
+interface ModalChooseProps {
+    visible: boolean;
+    setVisible: (vis: boolean) => void;
+}
 
-
-const ModalChoose = ({visible, setVisible}) => {
+const ModalChoose = ({visible, setVisible}: ModalChooseProps) => {
     const rootClasses = [classes.modal];
     if (visible) {
         rootClasses.push(classes.active);
@@ -18,38 +21,38 @@ const ModalChoose = ({visible, setVisible}) => {
         {id: 5, order: 5, value: "Выпечка"},
     ])
 
-    const [currentCard, setCurrentCard] = useState(null);
+    const [currentCard, setCurrentCard] = useState<any>(null);
 
-    function dragStartHandler(e, card) {
+    function dragStartHandler(e: React.DragEvent, card: {order: number, id: number}) {
         console.log("drag", card)
         setCurrentCard(card)
     }
 
-    function dragEndHandler(e) {
-        e.target.style.background = "#F2F5FA";
+    function dragEndHandler(e: React.DragEvent) {//Проверить правильность
+        (e.target as HTMLDivElement).style.background = "#F2F5FA";
     }
 
-    function dragOverHandler(e) {
+    function dragOverHandler(e: React.DragEvent) {
         e.preventDefault();
-        e.target.style.background = "black";
+        (e.target as HTMLElement).style.background = "black";
     }
 
-    function dropHandler(e, card) {
+    function dropHandler(e: React.DragEvent, card: {order: number, id: number}) {
         e.preventDefault();
         console.log("drop", card)
         setCardList(cardList.map(c => {
             if (c.id === card.id) {
-                return {...c, order: currentCard.order}
+                return {...c, order: currentCard!.order};
             }
-            if (c.id === currentCard.id) {
-                return {...c, order: card.order}
+            if (c.id === currentCard!.id) {
+                return {...c, order: card.order};
             }
             return c;
-        }))
-        e.target.style.background = "#F2F5FA";
+        }));
+        (e.target as HTMLElement).style.background = "#F2F5FA";
     }
 
-    const sortCards = (a, b) => {
+    const sortCards = (a: any, b: any) => {
         if (a.order > b.order) {
             return 1;
         } else {
@@ -69,15 +72,15 @@ const ModalChoose = ({visible, setVisible}) => {
                               onDragOver={(e) => dragOverHandler(e)}
                               onDrop={(e) => dropHandler(e, card)}
                               draggable={true}
-                              // className={classes.line}
-                        className={classes.btn_category}>{index + 1}) {card.value}</div>
+                            //   className={classes.line}
+                              className={classes.btn_category}>{index + 1}) {card.value}</div>
                     </div>
 
                 ))}
                 <div onClick={() => {
                     setVisible(false)
                     Swal.fire({
-                        position: 'center',
+                        position: 'top-end',
                         icon: 'success',
                         title: 'Сохранено!',
                         showConfirmButton: false,

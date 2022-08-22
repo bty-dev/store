@@ -54,6 +54,7 @@ const ModalSetCategory: React.FC<ModalSetCategoryProps> = ({visible, setVisible,
                 <div style={{color: "#A7A7A7", marginBottom: 20}}></div>
                 {cardList.map((card, index) => (
                     <div>
+
                         <div onClick={() => {
                             setVisible(false);
                             if (setCategoryForGroup !== undefined) {
