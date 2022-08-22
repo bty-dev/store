@@ -14,6 +14,7 @@ import { useState } from "react";
 import { loginRequest } from "./authConfig";
 import { ProfileData } from "./components/ProfileData";
 import { callMsGraph } from "./graph";
+import {AuthenticationResult} from "@azure/msal-browser";
 
 function App() {
   function ProfileContent() {
@@ -29,10 +30,10 @@ function App() {
         };
 
         // Silently acquires an access token which is then attached to a request for Microsoft Graph data
-        instance.acquireTokenSilent(request).then((response) => {
+        instance.acquireTokenSilent(request).then((response: AuthenticationResult) => {
             callMsGraph(response.accessToken).then(response => setGraphData(response));
-        }).catch((e) => {
-            instance.acquireTokenPopup(request).then((response) => {
+        }).catch((e: Error) => {
+            instance.acquireTokenPopup(request).then((response: AuthenticationResult) => {
                 callMsGraph(response.accessToken).then(response => setGraphData(response));
             });
         });
@@ -55,7 +56,7 @@ function App() {
       <AuthenticatedTemplate>
         {/* <ProfileContent /> */}
         <Routes>
-            <Route path="/shop_and_scales" element={ <ShopsAndScales/>}/>
+            <Route path="/" element={ <ShopsAndScales/>}/>
             <Route path="/products" element={ <Products />}/>
             <Route path="/categories" element={ <Categories />}/>
             <Route path="/oldScales" element={ <OldScales />}/>
