@@ -41,9 +41,11 @@ const ShopsAndScales: React.FC = () => {
     ])
     const [isChecked, setChecked] = useState(false)
     const [term, setTerm] = useState("");
+    const [marketsIds, setMarketsIds] = useState("")
 
-    const setCheckedState = () => {
+    const setCheckedState = (code: string) => {
         setChecked(!isChecked)
+        setMarketsIds(code)
     }
 
     const setVisible = () => {
@@ -115,7 +117,7 @@ const ShopsAndScales: React.FC = () => {
 
                 </div>
                 {isLoading ? <LoadingAnimation/> : data.map((item) => <Accordion setCheckedState={setCheckedState} title={item.Name} key ={item.MarketCode} code={item.Id} address={item.Address} scales={item.Scales}/>)}
-                <ModalChoose visible={isModal} setVisible={setModal}/>
+                <ModalChoose marketId={marketsIds} visible={isModal} setVisible={setModal}/>
             </div>
         </div>
     );

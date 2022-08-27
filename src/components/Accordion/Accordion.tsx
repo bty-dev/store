@@ -7,7 +7,7 @@ import icon from "./list_control.svg";
 import iconOpen from "./list_control_open.svg";
 import iconGray from "./icon_gray.svg";
 import ButtonStroke from "../UI/Buttons/ButtonStroke/ButtonStroke";
-import {Link} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import Chips from "../Chips/Chips";
 import {green} from "@mui/material/colors";
 import ModalSetCategory from "../UI/Modals/ModalSetCategory/ModalSetCategory";
@@ -21,7 +21,7 @@ interface AccordionProps {
     address: string;
     scales: Array<any>;
     setDefCat?: () => void;
-    setCheckedState: () => void;
+    setCheckedState: (code: string) => void;
 }
 const Accordion = ({title, code, address, scales, setDefCat, setCheckedState}: AccordionProps) => {
     const [isOpen, setOpen] = useState(false);
@@ -31,12 +31,16 @@ const Accordion = ({title, code, address, scales, setDefCat, setCheckedState}: A
         setOpen(!isOpen)
         console.log(isOpen)
     }
-    console.log(classes);
+    //console.log(classes);
+
+
+
+
     return (
 
         <div>
             <div className={classes.container}>
-                <Checkbox onClick={setCheckedState} icon={<RadioButtonUncheckedIcon />} checkedIcon={<CheckCircleOutlineIcon />} className={classes.checkbox} style={{alignSelf: `${isOpen ? "flex-start" : "center"}`}}/>
+                <Checkbox onClick={() => setCheckedState(code)} icon={<RadioButtonUncheckedIcon />} checkedIcon={<CheckCircleOutlineIcon />} className={classes.checkbox} style={{alignSelf: `${isOpen ? "flex-start" : "center"}`}}/>
                 <div className={classes.wrapper}>
                     <div className={classes.main}>
                         <div className={classes.text__hint}>Код магазина</div>
@@ -45,7 +49,7 @@ const Accordion = ({title, code, address, scales, setDefCat, setCheckedState}: A
                         <div className={classes.text__value}>{title}</div>
                         <div className={classes.text__hint}>Адрес</div>
                         <div className={classes.text__value}>{address}</div>
-                        <Link to="/products"><ButtonBlack>Товары</ButtonBlack></Link>
+                        <Link to="/products" state={{marketId: code}}><ButtonBlack>Товары</ButtonBlack></Link>
                         <div className={classes.open_more__block}>
                             <div className={classes.text__hint_light}>{scales.length} {scales.length === 1 ? "весы " : "весов"}</div>
                             {scales.length === 0 ? <div style={{width: 30}}></div> : <img onClick={() => toggleOpen()} className={classes.img} src={isOpen ? iconOpen : icon} alt="open"/>}
@@ -83,7 +87,7 @@ interface tableLineProps {
 }
 
 const setDefaultCategoryForScale = async (scaleId: number, categoryId: number) => {
-    axios.post(`https://localhost:44302/api/Portal/SetDefaultCategory?scaleId=${scaleId}&categoryId=${categoryId}`)
+    axios.post(`https://localhost:44302/api/Portal/SetDefaultCategory?scaleId=${scaleId}&categoryIndex=${categoryId}`)
         .then(function (response) {
             console.log(response.status);
         })

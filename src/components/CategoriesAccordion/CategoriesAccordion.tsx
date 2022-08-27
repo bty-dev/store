@@ -126,7 +126,7 @@ const TableLine = ({groups, getCategories}: CategoriesAccordionProps) => {
                     <div className={classes.text__value}>
                         <ButtonBlack onClick={setVisible}>Указать категорию</ButtonBlack>
                     </div>
-                    <ModalSetCategory setCategoryForGroup={setCategoryForGroup} visible={view} setVisible={setView} itemNumber={item} groupIndex={index}/>
+                    <ModalSetCategory setCategoryForGroup={setCategoryForGroup} visible={view} setVisible={setView} itemNumber={item} groupIndex={groups[index]}/>
                 </div>
             ))}
 

@@ -10,10 +10,12 @@ import meat from "./meat.svg";
 import tomato from "./tomato.svg";
 import ModalAccept from "../../components/UI/Modals/ModalAccept/ModalAccept";
 import Chips from "../../components/Chips/Chips";
-import {Link} from "react-router-dom";
+import {Link, useLocation} from "react-router-dom";
 import axios from '../../services/ApiService';
 import LoadingAnimation from "../../components/LoadingAnimation/LoadingAnimation";
 import Tab from "../../components/Tab/Tab";
+import RadioButtonUncheckedIcon from "@mui/icons-material/RadioButtonUnchecked";
+import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
 
 interface ProductItem {
     Id: number;
@@ -31,20 +33,34 @@ const Products: React.FC = () => {
 
     ])
     const [isModal, setModal] = useState(false);
+    const [counterWithoutImg, setcounterWithoutImg] = useState(0)
+    const [counterChecked, setCounterChecked] = useState(false);
+
 
     const setVisible = () => {
         setModal(true);
     }
 
+    const location = useLocation();
+    // @ts-ignore
+    const marketId = location.state.marketId;
 
 
 
     useEffect(() => {
-        axios.get("/GetPage?page=1&marketId=D001")
+        console.log(marketId)
+        axios.get(`/GetPage?page=1&marketId=${marketId}&GoodsWihoutImage=false`)
             .then(function (response) {
                 console.log(JSON.stringify(response.data));
                 setProducts(response.data)
                 setLoading(false);
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+        axios.get(`https://localhost:44302/api/Portal/GetGoodsWithoutImg?marketId=${"D004"}`)
+            .then(function (response) {
+                setcounterWithoutImg(response.data.length)
             })
             .catch(function (error) {
                 console.log(error);
@@ -65,7 +81,7 @@ const Products: React.FC = () => {
     }
     let data: Array<ProductItem> = searchProducts(products, term);
 
-    const setPageNum = (page: number, marketId: string) => {
+    const setPageNum = (page: number) => {
         axios.get(`/GetPage?page=${page}&marketId=${marketId}`)
             .then(function (response) {
                 console.log(JSON.stringify(response.data));
@@ -78,9 +94,30 @@ const Products: React.FC = () => {
             });
     }
 
+    const showGoodsWithoutImg = (marketId: number): void => {
+        if (!counterChecked) {
+            axios.get(`https://localhost:44302/api/Portal/GetGoodsWithoutImg?marketId=${"D004"}`)
+                .then(function (response) {
+                    console.log(JSON.stringify(response.data));
+                    setProducts(response.data)
+                    setLoading(false);
+                    setcounterWithoutImg(response.data.length)
+                    console.log("srabotalo")
+                })
+                .catch(function (error) {
+                    console.log(error);
+                });
+            setCounterChecked(true);
+        } else {
+            setCounterChecked(false)
+            setPageNum(1)
+        }
+
+    }
+
     return (
         <div className={classes.page__cont}>
-            <div className={classes.page__title}>Товары: <span className={classes.shop__title}>"Тестовый магазин 02"</span></div>
+            <div className={classes.page__title}>Товары: <span className={classes.shop__title}>"Магазин {marketId}"</span></div>
             <div className={classes.nav__btns}>
                 <Link style={{ textDecoration: 'none' }} to="/"><Tab styles={{backgroundColor: "#D9D9D9", pointerEvents: "none"}}>Весы</Tab></Link>
                 <Link style={{ textDecoration: 'none' }} to="/categories"><Tab styles={{backgroundColor: "#D9D9D9", pointerEvents: "none"}}>Категории</Tab></Link>
@@ -90,9 +127,9 @@ const Products: React.FC = () => {
                 <div className={classes.main__top__panel}>
                     <SearchField hint="Начните вводить наименование продукта или его SAPid" onUpdateSearch={onUpdateSearch}/>
                     <div className={classes.top__filter}>
-                        <Checkbox/>
+                        <Checkbox onClick={() => showGoodsWithoutImg(marketId)} icon={<RadioButtonUncheckedIcon />} checkedIcon={<CheckCircleOutlineIcon />} className={classes.checkbox}/>
                         <div className={classes.top__title}>Показывать товары без фото</div>
-                        <div className={classes.top__subtitle}>0</div>
+                        <div className={classes.top__subtitle}>{counterWithoutImg}</div>
                     </div>
 
                     <div className={classes.btns__top}>
@@ -105,9 +142,9 @@ const Products: React.FC = () => {
                 {isLoading ? <LoadingAnimation/> : data.map(item => (
                     <ProductListItem key={item.Id} img={tomato} title={item.Name} price={item.Price} category={item.CategoryName} group={item.GroupPLU} PLU={item.PLU}/>
                 ))}
-                <div className={classes.pagination}>
-                    <Pagination setPageNum={setPageNum}/>
-                </div>
+                {/*<div className={classes.pagination}>*/}
+                {/*    <Pagination setPageNum={setPageNum}/>*/}
+                {/*</div>*/}
                 <ModalAccept visible={isModal} setVisible={setModal} text="Вы уверенны, что хотите изменить фото товара?"/>
             </div>
         </div>

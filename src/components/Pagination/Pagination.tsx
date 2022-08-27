@@ -16,6 +16,11 @@ const Pagination = ({setPageNum}: PaginationProps) => {
         setPageNum(page)
     }
 
+    const validatePageMinNumber = (number: number): number => {
+        if(number === 1 ) return number;
+        return number - 1;
+    }
+
     let first = selected === 1 ? classes.circle__page : classes.circle__page_sec;
     let second = selected === 2 ? classes.circle__page : classes.circle__page_sec;
     let third = selected === 3 ? classes.circle__page : classes.circle__page_sec;
@@ -25,7 +30,7 @@ const Pagination = ({setPageNum}: PaginationProps) => {
 
     return (
         <div className={classes.container}>
-            <img onClick={() => setPage(selected - 1)} className={classes.img} src={leftArrow} alt="left"/>
+            <img onClick={() => setPage(validatePageMinNumber(selected))} className={classes.img} src={leftArrow} alt="left"/>
             <div onClick={() => setPage(1)} className={first}>1</div>
             <div onClick={() => setPage(2)} className={second}>2</div>
             <div onClick={() => setPage(3)} className={third}>3</div>

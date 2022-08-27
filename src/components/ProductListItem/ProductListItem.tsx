@@ -1,8 +1,7 @@
 import React from 'react';
 import classes from "./ProductListItem.module.scss";
 import Checkbox from '@mui/material/Checkbox';
-
-import thumbnail from "./thumbnail.svg";
+import thumbnail from "./tomato.svg";
 import Chips from "../Chips/Chips";
 
 interface ProductListItemProps {
@@ -22,7 +21,7 @@ const ProductListItem: React.FC<ProductListItemProps> = ({img, title, price, cat
         <div className={classes.container}>
             <Checkbox/>
             <div className={classes.main}>
-                <img className={classes.thumb} src={img} alt="logo"/>
+                <img className={classes.thumb} src={thumbnail} alt="logo"/>
                 <div className={classes.product__title__block}>
                     <div className={classes.product__title__first}>{title.length > 10 ? `${title.substring(0, 7)}...` : title}</div>
                     <div className={classes.product__subtitle}>{PLU}</div>

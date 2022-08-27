@@ -60,7 +60,7 @@ const ModalSetCategory: React.FC<ModalSetCategoryProps> = ({visible, setVisible,
                             if (setCategoryForGroup !== undefined) {
                                 setCategoryForGroup(groupIndex, card.Id);
                             }
-                            if (setCategoryForScale !== undefined) setCategoryForScale(scaleId, card.Id);
+                            if (setCategoryForScale !== undefined) setCategoryForScale(scaleId, index);
 
 
                         }} className={classes.btn_category}>{card.Id}) {card.RuName}</div>
