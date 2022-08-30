@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useRef} from 'react';
 import classes from "./Products.module.scss";
 import SearchField from "../../components/UI/SearchField/SearchField";
 import ButtonBlackEdit from "../../components/UI/Buttons/ButtonBlackEdit/ButtonBlackEdit";
@@ -16,6 +16,7 @@ import LoadingAnimation from "../../components/LoadingAnimation/LoadingAnimation
 import Tab from "../../components/Tab/Tab";
 import RadioButtonUncheckedIcon from "@mui/icons-material/RadioButtonUnchecked";
 import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
+import Swal from "sweetalert2";
 
 interface ProductItem {
     Id: number;
@@ -35,10 +36,23 @@ const Products: React.FC = () => {
     const [isModal, setModal] = useState(false);
     const [counterWithoutImg, setcounterWithoutImg] = useState(0)
     const [counterChecked, setCounterChecked] = useState(false);
+    const [productChecked, setProductChecked] = useState(false);
+    const inputFile = useRef<HTMLInputElement | null>(null)
 
 
     const setVisible = () => {
-        setModal(true);
+        if(productChecked) {
+            setModal(true);
+            if (inputFile.current) inputFile.current.click();
+        } else {
+            Swal.fire({
+                position: 'center',
+                icon: 'error',
+                title: 'Выберите хотя бы один товар!',
+                showConfirmButton: false,
+                timer: 1500
+            })
+        }
     }
 
     const location = useLocation();
@@ -82,7 +96,7 @@ const Products: React.FC = () => {
     let data: Array<ProductItem> = searchProducts(products, term);
 
     const setPageNum = (page: number) => {
-        axios.get(`/GetPage?page=${page}&marketId=${marketId}`)
+        axios.get(`/GetPage?page=${page}&marketId=${marketId}&GoodsWihoutImage=false`)
             .then(function (response) {
                 console.log(JSON.stringify(response.data));
                 setProducts(response.data)
@@ -115,8 +129,18 @@ const Products: React.FC = () => {
 
     }
 
+    const setCheckedProduct = () => {
+        setProductChecked(!productChecked)
+    }
+
+    const logFiles = (event: Event) => {
+
+    }
+
+
     return (
         <div className={classes.page__cont}>
+            <input onChange={() =>  console.log("changed")} type='file' id='file' ref={inputFile} style={{display: 'none'}}/>
             <div className={classes.page__title}>Товары: <span className={classes.shop__title}>"Магазин {marketId}"</span></div>
             <div className={classes.nav__btns}>
                 <Link style={{ textDecoration: 'none' }} to="/"><Tab styles={{backgroundColor: "#D9D9D9", pointerEvents: "none"}}>Весы</Tab></Link>
@@ -140,7 +164,7 @@ const Products: React.FC = () => {
                     <Checkbox/>Овощи
                 </div>
                 {isLoading ? <LoadingAnimation/> : data.map(item => (
-                    <ProductListItem key={item.Id} img={tomato} title={item.Name} price={item.Price} category={item.CategoryName} group={item.GroupPLU} PLU={item.PLU}/>
+                    <ProductListItem setCheckedProduct={setCheckedProduct} key={item.Id} img={tomato} title={item.Name} price={item.Price} category={item.CategoryName} group={item.GroupPLU} PLU={item.PLU}/>
                 ))}
                 {/*<div className={classes.pagination}>*/}
                 {/*    <Pagination setPageNum={setPageNum}/>*/}

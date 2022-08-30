@@ -11,15 +11,16 @@ interface ProductListItemProps {
     category: string | null;
     group: number | null;
     PLU: string;
+    setCheckedProduct: Function;
 }
 
 
 
-const ProductListItem: React.FC<ProductListItemProps> = ({img, title, price, category, group, PLU}) => {
+const ProductListItem: React.FC<ProductListItemProps> = ({img, title, price, category, group, PLU, setCheckedProduct}) => {
     
     return (
         <div className={classes.container}>
-            <Checkbox/>
+            <Checkbox onClick={() => setCheckedProduct()}/>
             <div className={classes.main}>
                 <img className={classes.thumb} src={thumbnail} alt="logo"/>
                 <div className={classes.product__title__block}>
