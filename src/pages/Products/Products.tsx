@@ -25,6 +25,9 @@ interface ProductItem {
     Price: number;
     CategoryName: string | null;
     GroupPLU: number | null;
+    Image: {
+        Data: string;
+    }
 }
 
 const Products: React.FC = () => {
@@ -36,12 +39,12 @@ const Products: React.FC = () => {
     const [isModal, setModal] = useState(false);
     const [counterWithoutImg, setcounterWithoutImg] = useState(0)
     const [counterChecked, setCounterChecked] = useState(false);
-    const [productChecked, setProductChecked] = useState(false);
+    const [productChecked, setProductChecked] = useState(0);
     const inputFile = useRef<HTMLInputElement | null>(null)
 
 
     const setVisible = () => {
-        if(productChecked) {
+        if(productChecked !== 0) {
             setModal(true);
             if (inputFile.current) inputFile.current.click();
         } else {
@@ -129,13 +132,28 @@ const Products: React.FC = () => {
 
     }
 
-    const setCheckedProduct = () => {
-        setProductChecked(!productChecked)
+    const setCheckedProduct = (Id: number) => {
+        if (productChecked === Id){
+            setProductChecked(0);
+        } else {
+            setProductChecked(Id);
+        }
+        console.log(productChecked);
+
     }
 
     const logFiles = (event: Event) => {
 
     }
+    // const setImageToGood = () => {
+    //     axios.post(`/SetGoodsImage?image_dto=${}`)
+    //         .then(function (response) {
+    //             console.log(JSON.stringify(response.data));
+    //         })
+    //         .catch(function (error) {
+    //             console.log(error);
+    //         });
+    // }
 
 
     return (
@@ -164,7 +182,7 @@ const Products: React.FC = () => {
                     <Checkbox/>Овощи
                 </div>
                 {isLoading ? <LoadingAnimation/> : data.map(item => (
-                    <ProductListItem setCheckedProduct={setCheckedProduct} key={item.Id} img={tomato} title={item.Name} price={item.Price} category={item.CategoryName} group={item.GroupPLU} PLU={item.PLU}/>
+                    <ProductListItem setCheckedProduct={setCheckedProduct} Id ={item.Id} key={item.Id} img={item.Image ? item.Image.Data : tomato} title={item.Name} price={item.Price} category={item.CategoryName} group={item.GroupPLU} PLU={item.PLU}/>
                 ))}
                 {/*<div className={classes.pagination}>*/}
                 {/*    <Pagination setPageNum={setPageNum}/>*/}
