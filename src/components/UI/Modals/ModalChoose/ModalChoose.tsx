@@ -72,29 +72,42 @@ const ModalChoose = ({visible, setVisible, marketId}: ModalChooseProps) => {
         console.log(marketId)
         axios.get(`https://localhost:44302/api/Portal/GetMarketCategories?marketId=${marketId}`)
             .then(function (response) {
-                setCardList(prevState => [response.data])
-                debugger
-                console.log(response.data)
-                debugger
-                console.log(cardList)
-                let copyObj = cardList.map((item, index) => {
-                    item.order = index + 1
-                    item.RuName = response.data[index].RuName
-                    return item
+                setCardList(response.data)
+                setCardList(prevState => {
+                    let copyObj = prevState.map((item, index) => {
+                        item.order = item.Id
+                        item.RuName = response.data[index].RuName
+                        return item
+                    })
+                    console.log(copyObj)
+                    return copyObj
                 })
-                debugger
-                console.log(copyObj)
-                setCardList(copyObj)
-                console.log(cardList)
+                // debugger
+                // console.log(response.data)
+                // debugger
+                // console.log(cardList)
+                // let copyObj = cardList.map((item, index) => {
+                //     item.order = index + 1
+                //     item.RuName = response.data[index].RuName
+                //     return item
+                // })
+                // debugger
+                // console.log(copyObj)
+                // setCardList(copyObj)
+                // console.log(cardList)
+                // console.log(response.data)
             })
             .catch(function (error) {
                 console.log(error);
             });
 
+
+
+
     }, [marketId])
 
     const sendCatOrders = () => {
-        const data: number[] = cardList.map(item => item.Id)
+        const data: number[] = cardList.map(item => item.order)
         let res = data.join(",");
         console.log(res)
         axios.get(`https://localhost:44302/api/Portal/ChangeCategoriesOrder?marketId=${marketId}&categoryIdsOrder=${res}`)
