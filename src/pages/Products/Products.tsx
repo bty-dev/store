@@ -1,4 +1,4 @@
-import React, {useEffect, useRef} from 'react';
+import React, {ChangeEvent, useEffect, useRef} from 'react';
 import classes from "./Products.module.scss";
 import SearchField from "../../components/UI/SearchField/SearchField";
 import ButtonBlackEdit from "../../components/UI/Buttons/ButtonBlackEdit/ButtonBlackEdit";
@@ -41,6 +41,7 @@ const Products: React.FC = () => {
     const [counterChecked, setCounterChecked] = useState(false);
     const [productChecked, setProductChecked] = useState(0);
     const inputFile = useRef<HTMLInputElement | null>(null)
+    const [base64String, setBase64String] = useState<string>("")
 
 
     const setVisible = () => {
@@ -66,7 +67,7 @@ const Products: React.FC = () => {
 
     useEffect(() => {
         console.log(marketId)
-        axios.get(`/GetPage?page=1&marketId=${marketId}&GoodsWihoutImage=false`)
+        axios.get(`/GetGoods?marketId=${marketId}`)
             .then(function (response) {
                 console.log(JSON.stringify(response.data));
                 setProducts(response.data)
@@ -75,7 +76,7 @@ const Products: React.FC = () => {
             .catch(function (error) {
                 console.log(error);
             });
-        axios.get(`https://localhost:44302/api/Portal/GetGoodsWithoutImg?marketId=${"D004"}`)
+        axios.get(`/GetGoodsWithoutImg?marketId=${marketId}`)
             .then(function (response) {
                 setcounterWithoutImg(response.data.length)
             })
@@ -99,7 +100,7 @@ const Products: React.FC = () => {
     let data: Array<ProductItem> = searchProducts(products, term);
 
     const setPageNum = (page: number) => {
-        axios.get(`/GetPage?page=${page}&marketId=${marketId}&GoodsWihoutImage=false`)
+        axios.get(`/GetGoods?marketId=${marketId}`)
             .then(function (response) {
                 console.log(JSON.stringify(response.data));
                 setProducts(response.data)
@@ -113,7 +114,7 @@ const Products: React.FC = () => {
 
     const showGoodsWithoutImg = (marketId: number): void => {
         if (!counterChecked) {
-            axios.get(`https://localhost:44302/api/Portal/GetGoodsWithoutImg?marketId=${"D004"}`)
+            axios.get(`/GetGoodsWithoutImg?marketId=${marketId}`)
                 .then(function (response) {
                     console.log(JSON.stringify(response.data));
                     setProducts(response.data)
@@ -142,23 +143,50 @@ const Products: React.FC = () => {
 
     }
 
-    const logFiles = (event: Event) => {
+    const logFiles = (event: React.ChangeEvent<HTMLInputElement>) => {
+        // @ts-ignore
+        console.log(event.target.files[0])
+        getBase64(event)
 
     }
-    // const setImageToGood = () => {
-    //     axios.post(`/SetGoodsImage?image_dto=${}`)
-    //         .then(function (response) {
-    //             console.log(JSON.stringify(response.data));
-    //         })
-    //         .catch(function (error) {
-    //             console.log(error);
-    //         });
-    // }
+
+    function getBase64(event: React.ChangeEvent<HTMLInputElement>) {
+        // @ts-ignore
+        let me = this;
+        // @ts-ignore
+        let file = event.target.files[0];
+        let reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = function () {
+            console.log(reader.result)
+            // @ts-ignore
+            setBase64String(reader.result.substr(reader.result.indexOf(',') + 1));
+            //setBase64String((reader.result).toString());
+
+
+        };
+
+        reader.onerror = function (error) {
+            console.log('Error: ', error);
+        };
+    }
+
+    const setImageToGood = (): void => {
+        axios.post(`/SetGoodsImage?goodIds=${productChecked},296848&image=${base64String}`)
+            .then(function (response) {
+                console.log(JSON.stringify(response.data));
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+    }
+
+
 
 
     return (
         <div className={classes.page__cont}>
-            <input onChange={() =>  console.log("changed")} type='file' id='file' ref={inputFile} style={{display: 'none'}}/>
+            <input onChange={logFiles} type='file' id='file' ref={inputFile} style={{display: 'none'}}/>
             <div className={classes.page__title}>Товары: <span className={classes.shop__title}>"Магазин {marketId}"</span></div>
             <div className={classes.nav__btns}>
                 <Link style={{ textDecoration: 'none' }} to="/"><Tab styles={{backgroundColor: "#D9D9D9", pointerEvents: "none"}}>Весы</Tab></Link>
@@ -187,7 +215,7 @@ const Products: React.FC = () => {
                 {/*<div className={classes.pagination}>*/}
                 {/*    <Pagination setPageNum={setPageNum}/>*/}
                 {/*</div>*/}
-                <ModalAccept visible={isModal} setVisible={setModal} text="Вы уверенны, что хотите изменить фото товара?"/>
+                <ModalAccept setImageToGood={setImageToGood} visible={isModal} setVisible={setModal} text="Вы уверенны, что хотите изменить фото товара?"/>
             </div>
         </div>
     );

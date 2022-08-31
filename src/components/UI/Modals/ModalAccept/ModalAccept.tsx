@@ -5,8 +5,9 @@ interface ModalAcceptProps {
     visible: boolean;
     setVisible: (vis: boolean) => void;
     text: string;
+    setImageToGood?: Function;
 }
-const ModalAccept = ({visible, setVisible, text}: ModalAcceptProps) => {
+const ModalAccept = ({visible, setVisible, text, setImageToGood}: ModalAcceptProps) => {
     const rootClasses = [classes.modal];
     if (visible) {
         rootClasses.push(classes.active);
@@ -20,6 +21,8 @@ const ModalAccept = ({visible, setVisible, text}: ModalAcceptProps) => {
                     <div onClick={() => setVisible(false)} className={classes.btn_deny}>Отменить</div>
                     <div onClick={() => {
                         setVisible(false)
+                        if (setImageToGood) setImageToGood();
+
                         Swal.fire({
                             position: 'center',
                             icon: 'success',
