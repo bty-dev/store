@@ -172,7 +172,7 @@ const Products: React.FC = () => {
     }
 
     const setImageToGood = (): void => {
-        axios.post(`/SetGoodsImage?goodIds=${productChecked},296848&image=${base64String}`)
+        axios.post(`/SetGoodsImage?goodIds=${productChecked}&image=${base64String}`)
             .then(function (response) {
                 console.log(JSON.stringify(response.data));
             })
@@ -206,9 +206,7 @@ const Products: React.FC = () => {
                         <ButtonBlackEdit onClick={setVisible}/>
                     </div>
                 </div>
-                <div className={classes.category__title}>
-                    <Checkbox/>Овощи
-                </div>
+
                 {isLoading ? <LoadingAnimation/> : data.map(item => (
                     <ProductListItem setCheckedProduct={setCheckedProduct} Id ={item.Id} key={item.Id} img={item.Image ? item.Image.Data : tomato} title={item.Name} price={item.Price} category={item.CategoryName} group={item.GroupPLU} PLU={item.PLU}/>
                 ))}
