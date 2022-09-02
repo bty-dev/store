@@ -67,12 +67,9 @@ const Categories: React.FC = () => {
             <div className={classes.page__main}>
                 <div className={classes.main__top__panel}>
                     <SearchField hint="Начните вводить название категории" onUpdateSearch={onUpdateSearch}/>
-
                 </div>
                 {isLoading ? <LoadingAnimation/> : data.map((item) => <CategoriesAccordion getCategories={getCategoriesAndGroups} title={item.Name} groups={item.GroupsPLU} key ={item.Id}/>)}
-
             </div>
-
         </div>
     );
 };
