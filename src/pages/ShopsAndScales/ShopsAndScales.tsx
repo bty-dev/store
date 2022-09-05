@@ -67,7 +67,9 @@ const ShopsAndScales: React.FC = () => {
         if (term.length === 0) return items;
 
         return items.filter(item => {
-            return item.Name.toLowerCase().indexOf(term.toLowerCase()) > -1;
+            if(item.Name.toLowerCase().indexOf(term.toLowerCase()) > -1) return item.Name.toLowerCase().indexOf(term.toLowerCase()) > -1;
+            if(item.Id.toLowerCase().indexOf(term.toLowerCase()) > -1) return item.Id.toLowerCase().indexOf(term.toLowerCase()) > -1;
+            return item.Address.toLowerCase().indexOf(term.toLowerCase()) > -1;
         })
     }
 

@@ -107,7 +107,7 @@ const TableLine = ({groups, getCategories}: CategoriesAccordionProps) => {
     }
 
     const setCategoryForGroup = async (groupId: number, categoryId: number) => {
-        axios.post(`https://localhost:44302/api/Portal/SetGroupCategory?groupName=${groupId}&categoryId=${categoryId}`)
+        axios.post(`https://localhost:44302/api/Portal/SetGroupCategory?groupPlu=${groupId}&categoryId=${categoryId}`)
             .then(function (response) {
                 console.log(response.status);
                 getCategories();

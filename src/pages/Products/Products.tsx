@@ -25,9 +25,7 @@ interface ProductItem {
     Price: number;
     CategoryName: string | null;
     GroupPLU: number | null;
-    Image: {
-        Data: string;
-    }
+    Thumbnails: string;
 }
 
 const Products: React.FC = () => {
@@ -90,7 +88,9 @@ const Products: React.FC = () => {
         if (term.length === 0) return items;
 
         return items.filter((item) => {
-            return item.Name.toLowerCase().indexOf(term.toLowerCase()) > -1;
+            if(item.Name.toLowerCase().indexOf(term.toLowerCase()) > -1) return item.Name.toLowerCase().indexOf(term.toLowerCase()) > -1;
+            if(item.PLU.toLowerCase().indexOf(term.toLowerCase()) > -1) return item.PLU.toLowerCase().indexOf(term.toLowerCase()) > -1;
+            if(item.GroupPLU) return  item.GroupPLU.toString().toLowerCase().indexOf(term.toLowerCase()) > -1;
         })
     }
 
@@ -149,18 +149,19 @@ const Products: React.FC = () => {
         getBase64(event)
 
     }
-
+    let file: File;
     function getBase64(event: React.ChangeEvent<HTMLInputElement>) {
         // @ts-ignore
         let me = this;
         // @ts-ignore
-        let file = event.target.files[0];
+        file = event.target.files[0];
+        console.log(file)
         let reader = new FileReader();
         reader.readAsDataURL(file);
         reader.onload = function () {
             console.log(reader.result)
             // @ts-ignore
-            setBase64String(reader.result.substr(reader.result.indexOf(',') + 1));
+            //setBase64String(reader.result.substr(reader.result.indexOf(',') + 1));
             //setBase64String((reader.result).toString());
 
 
@@ -172,13 +173,39 @@ const Products: React.FC = () => {
     }
 
     const setImageToGood = (): void => {
-        axios.post(`/SetGoodsImage?goodIds=${productChecked}&image=${base64String}`)
+        let formData = new FormData();
+        formData.append("file", file);
+        axios.post(`/SetGoodsImage?goodIds=${productChecked}`, formData, {
+            headers: {
+                "Access-Control-Allow-Origin": "*",
+                "Content-Type": "multipart/form-data",
+
+            },
+        })
             .then(function (response) {
                 console.log(JSON.stringify(response.data));
+                axios.get(`/GetGoods?marketId=${marketId}`)
+                    .then(function (response) {
+                        console.log(JSON.stringify(response.data));
+                        setProducts(response.data)
+                        setLoading(false);
+                    })
+                    .catch(function (error) {
+                        console.log(error);
+                    });
+                axios.get(`/GetGoodsWithoutImg?marketId=${marketId}`)
+                    .then(function (response) {
+                        setcounterWithoutImg(response.data.length)
+                        console.log(response.data.length)
+                    })
+                    .catch(function (error) {
+                        console.log(error);
+                    });
             })
             .catch(function (error) {
                 console.log(error);
             });
+
     }
 
 
@@ -208,7 +235,7 @@ const Products: React.FC = () => {
                 </div>
 
                 {isLoading ? <LoadingAnimation/> : data.map(item => (
-                    <ProductListItem setCheckedProduct={setCheckedProduct} Id ={item.Id} key={item.Id} img={item.Image ? item.Image.Data : tomato} title={item.Name} price={item.Price} category={item.CategoryName} group={item.GroupPLU} PLU={item.PLU}/>
+                    <ProductListItem setCheckedProduct={setCheckedProduct} Id ={item.Id} key={item.Id} img={item.Thumbnails ? item.Thumbnails : tomato} title={item.Name} price={item.Price} category={item.CategoryName} group={item.GroupPLU} PLU={item.PLU}/>
                 ))}
                 {/*<div className={classes.pagination}>*/}
                 {/*    <Pagination setPageNum={setPageNum}/>*/}

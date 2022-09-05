@@ -21,7 +21,7 @@ const SearchField = ({...props}) => {
             <input
                 placeholder={props.hint}
                 className={classes.field}
-                type="text"
+                type={"text"}
                 value={term}
                 onChange={onUpdateSearch}
             />

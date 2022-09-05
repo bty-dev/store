@@ -107,7 +107,7 @@ const ModalChoose = ({visible, setVisible, marketId}: ModalChooseProps) => {
     }, [marketId])
 
     const sendCatOrders = () => {
-        const data: number[] = cardList.map(item => item.order)
+        const data: number[] = cardList.map(item => item.Id)
         let res = data.join(",");
         console.log(res)
         axios.get(`https://localhost:44302/api/Portal/ChangeCategoriesOrder?marketId=${marketId}&categoryIdsOrder=${res}`)
