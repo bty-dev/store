@@ -26,6 +26,7 @@ interface ProductItem {
     CategoryName: string | null;
     GroupPLU: number | null;
     Thumbnails: string;
+    Code: string;
 }
 
 const Products: React.FC = () => {
@@ -90,7 +91,9 @@ const Products: React.FC = () => {
         return items.filter((item) => {
             if(item.Name.toLowerCase().indexOf(term.toLowerCase()) > -1) return item.Name.toLowerCase().indexOf(term.toLowerCase()) > -1;
             if(item.PLU.toLowerCase().indexOf(term.toLowerCase()) > -1) return item.PLU.toLowerCase().indexOf(term.toLowerCase()) > -1;
+            if(item.Code) return  item.Code.toLowerCase().indexOf(term.toLowerCase()) > -1;
             if(item.GroupPLU) return  item.GroupPLU.toString().toLowerCase().indexOf(term.toLowerCase()) > -1;
+
         })
     }
 
