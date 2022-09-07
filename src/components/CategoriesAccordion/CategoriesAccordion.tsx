@@ -35,7 +35,7 @@ const CategoriesAccordion = ({title, groups, getCategories}: CategoriesAccordion
 
     return (
         <div>
-            <ModalAccept visible={isModal} setVisible={setModal} text="Вы уверенны, что хотите изменить категорию этой группы?"/>
+            {/*<ModalAccept visible={isModal} setVisible={setModal} text="Вы уверенны, что хотите изменить категорию этой группы?"/>*/}
             <div className={classes.container}>
                 <div className={classes.wrapper}>
                     <div className={classes.main}>
@@ -46,11 +46,11 @@ const CategoriesAccordion = ({title, groups, getCategories}: CategoriesAccordion
 
                         </div>
                     </div>
-                    {isOpen
+                    {isOpen && groups.length > 0
                         ?
 
                         <div className={classes.table__low}>
-                                <TableLine getCategories={getCategories} groups={groups}/>
+                            <TableLine getCategories={getCategories} groups={groups}/>
 
 
 
@@ -121,7 +121,7 @@ const TableLine = ({groups, getCategories}: CategoriesAccordionProps) => {
         <>
             {groups.map((item, index) => (
                 <div className={classes.table__line}>
-                    <ModalAccept visible={isModal} setVisible={setModal} text="Вы уверенны, что хотите изменить категорию этой группы?"/>
+                    {/*<ModalAccept visible={isModal} setVisible={setModal} text="Вы уверенны, что хотите изменить категорию этой группы?"/>*/}
                     <div className={classes.text__value}>{item}</div>
                     <div className={classes.text__value}>
                         <ButtonBlack onClick={setVisible}>Указать категорию</ButtonBlack>

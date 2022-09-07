@@ -10,9 +10,11 @@ interface ModalSetCategoryProps {
     groupIndex?: number;
     scaleId?: number;
     setCategoryForScale?: Function;
+    forScale?: boolean;
+    code?: string;
 }
 
-const ModalSetCategory: React.FC<ModalSetCategoryProps> = ({visible, setVisible, setCategoryForGroup, itemNumber, groupIndex, scaleId, setCategoryForScale}) => {
+const ModalSetCategory: React.FC<ModalSetCategoryProps> = ({code, forScale, visible, setVisible, setCategoryForGroup, itemNumber, groupIndex, scaleId, setCategoryForScale}) => {
     const rootClasses = [classes.modal];
     if (visible) {
         rootClasses.push(classes.active);
@@ -30,9 +32,11 @@ const ModalSetCategory: React.FC<ModalSetCategoryProps> = ({visible, setVisible,
     }, [])
 
     const getCategories = async () => {
+        let url = forScale ? `https://localhost:44302/api/Portal/GetMarketCategories?marketId=${code}` : 'https://localhost:44302/api/Portal/GetCategories';
+        console.log(url)
         let config = {
             method: 'get',
-            url: 'https://localhost:44302/api/Portal/GetCategories',
+            url: url,
             headers: { }
         };
 
@@ -55,7 +59,8 @@ const ModalSetCategory: React.FC<ModalSetCategoryProps> = ({visible, setVisible,
                 {cardList.map((card, index) => (
                     <div>
 
-                        <div onClick={() => {
+                        <div onClick={(e) => {
+                            e.stopPropagation();
                             setVisible(false);
                             if (setCategoryForGroup !== undefined) {
                                 setCategoryForGroup(groupIndex, card.Id);
@@ -63,7 +68,7 @@ const ModalSetCategory: React.FC<ModalSetCategoryProps> = ({visible, setVisible,
                             if (setCategoryForScale !== undefined) setCategoryForScale(scaleId, index);
 
 
-                        }} className={classes.btn_category}>{card.Id}) {card.RuName}</div>
+                        }} className={classes.btn_category}>{index + 1}) {card.RuName}</div>
                     </div>
 
                 ))}

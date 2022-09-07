@@ -66,7 +66,7 @@ const Accordion = ({title, code, address, scales, setDefCat, setCheckedState}: A
                                 <div className={classes.text__hint}>Статус <img className={classes.img} src={iconGray} alt="open"/></div>
                                 <div className={classes.text__hint}>Категории <img className={classes.img} src={iconGray} alt="open"/></div>
                             </div>
-                            {scales.map(item => (<TableLine scaleId={item.Id} number={item.Number} api={item.IP} status={item.Status} type={item.Type}/>))}
+                            {scales.map(item => (<TableLine code={code} scaleId={item.Id} number={item.Number} api={item.IP} status={item.Status} type={item.Type}/>))}
                         </div>
 
                     : null
@@ -84,6 +84,7 @@ interface tableLineProps {
     type: string;
     status: boolean;
     scaleId: number;
+    code: string;
 }
 
 const setDefaultCategoryForScale = async (scaleId: number, categoryId: number) => {
@@ -96,7 +97,7 @@ const setDefaultCategoryForScale = async (scaleId: number, categoryId: number) =
         });
 }
 
-const TableLine = ({number, api, type, status, scaleId}: tableLineProps) => {
+const TableLine = ({number, api, type, status, scaleId, code}: tableLineProps) => {
     const [isModal, setModal] = useState(false);
     const setVisible = () => {
         setModal(true);
@@ -110,7 +111,8 @@ const TableLine = ({number, api, type, status, scaleId}: tableLineProps) => {
             <div className={classes.text__value}>
                 <ButtonStroke onClick={setVisible}>Выбрать</ButtonStroke>
             </div>
-            <ModalSetCategory scaleId={scaleId} itemNumber={1} setCategoryForScale={setDefaultCategoryForScale} visible={isModal} setVisible={setModal}/>
+            <ModalSetCategory code={code} forScale={true} scaleId={scaleId} itemNumber={1} setCategoryForScale={setDefaultCategoryForScale} visible={isModal} setVisible={setModal}/>
+
         </div>
     )
 }

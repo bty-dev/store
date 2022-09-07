@@ -18,8 +18,9 @@ const ModalAccept = ({visible, setVisible, text, setImageToGood}: ModalAcceptPro
             <div className={classes.modal__content} onClick={(e) => e.stopPropagation()}>
                 <h1>{text}</h1>
                 <div className={classes.btns__choose}>
-                    <div onClick={() => setVisible(false)} className={classes.btn_deny}>Отменить</div>
-                    <div onClick={() => {
+                    <div onClick={(e) => {setVisible(false); e.stopPropagation();}} className={classes.btn_deny}>Отменить</div>
+                    <div onClick={(e) => {
+                        e.stopPropagation();
                         setVisible(false)
                         if (setImageToGood) setImageToGood();
 

@@ -37,13 +37,13 @@ const Products: React.FC = () => {
     const [isModal, setModal] = useState(false);
     const [counterWithoutImg, setcounterWithoutImg] = useState(0)
     const [counterChecked, setCounterChecked] = useState(false);
-    const [productChecked, setProductChecked] = useState(0);
+    const [productChecked, setProductChecked] = useState<number[]> ([]);
     const inputFile = useRef<HTMLInputElement | null>(null)
     const [base64String, setBase64String] = useState<string>("")
 
 
     const setVisible = () => {
-        if(productChecked !== 0) {
+        if(productChecked.length > 0) {
             setModal(true);
             if (inputFile.current) inputFile.current.click();
         } else {
@@ -134,10 +134,11 @@ const Products: React.FC = () => {
     }
 
     const setCheckedProduct = (Id: number) => {
-        if (productChecked === Id){
-            setProductChecked(0);
+        if (productChecked.indexOf(Id) === -1){
+            // @ts-ignore
+            setProductChecked(prevState => [...prevState, Id]);
         } else {
-            setProductChecked(Id);
+            setProductChecked(prevState => [...prevState].filter(item => item !== Id));
         }
         console.log(productChecked);
 
@@ -175,7 +176,7 @@ const Products: React.FC = () => {
     const setImageToGood = (): void => {
         let formData = new FormData();
         formData.append("file", file);
-        axios.post(`/SetGoodsImage?goodIds=${productChecked}`, formData, {
+        axios.post(`/SetGoodsImage?goodIds=${productChecked.join(",")}`, formData, {
             headers: {
                 "Access-Control-Allow-Origin": "*",
                 "Content-Type": "multipart/form-data",
