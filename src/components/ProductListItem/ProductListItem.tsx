@@ -21,19 +21,22 @@ interface ProductListItemProps {
 
 
 const ProductListItem: React.FC<ProductListItemProps> = ({Id, img, title, price, category, group, PLU, setCheckedProduct}) => {
-    
+    function numberWithCommas(x: number) {
+        return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
+    }
+    let priceView = numberWithCommas(price * 1000);
     return (
         <div className={classes.container}>
             <Checkbox onClick={() => setCheckedProduct(Id)} icon={<RadioButtonUncheckedIcon />} checkedIcon={<CheckCircleOutlineIcon />}/>
             <div className={classes.main}>
                 <img className={classes.thumb} src={`data:image/png;base64,${img}`} alt=""/>
                 <div className={classes.product__title__block}>
-                    <div className={classes.product__title__first__price}>{title.length > 10 ? `${title.substring(0, 10)}...` : title}</div>
+                    <div className={classes.product__title__first__price}>{title.length > 0 ? `${title.substring(0, 50)}...` : title}</div>
                     <div className={classes.product__subtitle}>{PLU}</div>
                 </div>
                 <div className={classes.product__price__block}>
                     <div className={classes.product__price}>Цена</div>
-                    <div className={classes.product__price__sub}>{price * 1000} Сум/кг</div>
+                    <div className={classes.product__price__sub}>{priceView} Сум/кг</div>
                 </div>
                 <div className={classes.product__category}>
                     <div className={classes.product__title}>Категория</div>

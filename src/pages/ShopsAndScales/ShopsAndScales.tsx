@@ -111,7 +111,7 @@ const ShopsAndScales: React.FC = () => {
             </div>
             <div className={classes.page__main}>
                 <div className={classes.main__top__panel}>
-                    <SearchField hint="Начните вводить название магазина" onUpdateSearch={onUpdateSearch}/>
+                    <SearchField hint="Начните вводить код/название/адрес магазина" onUpdateSearch={onUpdateSearch}/>
                     <div className={classes.btns__top}>
                         <ButtonBlack onClick={setVisible}>Порядок<br/>категорий</ButtonBlack>
                         <Link to={"/categories"}><ButtonBlack>Настроить<br/>категории</ButtonBlack></Link>

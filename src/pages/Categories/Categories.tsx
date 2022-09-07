@@ -77,7 +77,7 @@ const Categories: React.FC = () => {
             </div>
             <div className={classes.page__main}>
                 <div className={classes.main__top__panel}>
-                    <SearchField  hint="Начните вводить название категории" onUpdateSearch={onUpdateSearch}/>
+                    <SearchField  hint="Начните вводить код группы" onUpdateSearch={onUpdateSearch}/>
                 </div>
                 {isLoading ? <LoadingAnimation/> : data.map((item) => <CategoriesAccordion getCategories={getCategoriesAndGroups} title={item.Name} groups={item.GroupsPLU} key ={item.Id}/>)}
             </div>

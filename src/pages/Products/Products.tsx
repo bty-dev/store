@@ -25,7 +25,7 @@ interface ProductItem {
     Price: number;
     CategoryName: string | null;
     GroupPLU: number | null;
-    Thumbnails: string;
+    Thumbnail: string;
     Code: string;
 }
 
@@ -89,9 +89,9 @@ const Products: React.FC = () => {
         if (term.length === 0) return items;
 
         return items.filter((item) => {
+            if(item.Code) return  item.Code.toLowerCase().indexOf(term.toLowerCase()) > -1;
             if(item.Name.toLowerCase().indexOf(term.toLowerCase()) > -1) return item.Name.toLowerCase().indexOf(term.toLowerCase()) > -1;
             if(item.PLU.toLowerCase().indexOf(term.toLowerCase()) > -1) return item.PLU.toLowerCase().indexOf(term.toLowerCase()) > -1;
-            if(item.Code) return  item.Code.toLowerCase().indexOf(term.toLowerCase()) > -1;
             if(item.GroupPLU) return  item.GroupPLU.toString().toLowerCase().indexOf(term.toLowerCase()) > -1;
 
         })
@@ -226,7 +226,7 @@ const Products: React.FC = () => {
             </div>
             <div className={classes.page__main}>
                 <div className={classes.main__top__panel}>
-                    <SearchField hint="Начните вводить наименование продукта или его SAPid" onUpdateSearch={onUpdateSearch}/>
+                    <SearchField hint="Начните вводить штрих-код/название/PLU/группу товара" onUpdateSearch={onUpdateSearch}/>
                     <div className={classes.top__filter}>
                         <Checkbox onClick={() => showGoodsWithoutImg(marketId)} icon={<RadioButtonUncheckedIcon />} checkedIcon={<CheckCircleOutlineIcon />} className={classes.checkbox}/>
                         <div className={classes.top__title}>Показывать товары без фото</div>
@@ -239,7 +239,7 @@ const Products: React.FC = () => {
                 </div>
 
                 {isLoading ? <LoadingAnimation/> : data.map(item => (
-                    <ProductListItem setCheckedProduct={setCheckedProduct} Id ={item.Id} key={item.Id} img={item.Thumbnails ? item.Thumbnails : tomato} title={item.Name} price={item.Price} category={item.CategoryName} group={item.GroupPLU} PLU={item.PLU}/>
+                    <ProductListItem setCheckedProduct={setCheckedProduct} Id ={item.Id} key={item.Id} img={item.Thumbnail ? item.Thumbnail : tomato} title={item.Name} price={item.Price} category={item.CategoryName} group={item.GroupPLU} PLU={item.PLU}/>
                 ))}
                 {/*<div className={classes.pagination}>*/}
                 {/*    <Pagination setPageNum={setPageNum}/>*/}
