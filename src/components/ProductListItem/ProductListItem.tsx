@@ -31,7 +31,7 @@ const ProductListItem: React.FC<ProductListItemProps> = ({Id, img, title, price,
             <div className={classes.main}>
                 <img className={classes.thumb} src={`data:image/png;base64,${img}`} alt=""/>
                 <div className={classes.product__title__block}>
-                    <div className={classes.product__title__first__price}>{title.length > 0 ? `${title.substring(0, 50)}...` : title}</div>
+                    <div className={classes.product__title__first__price}>{title.length > 50 ? `${title.substring(0, 50)}...` : title}</div>
                     <div className={classes.product__subtitle}>{PLU}</div>
                 </div>
                 <div className={classes.product__price__block}>

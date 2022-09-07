@@ -187,6 +187,7 @@ const Products: React.FC = () => {
             },
         })
             .then(function (response) {
+                setProductChecked(prevState => [...prevState])
                 console.log(JSON.stringify(response.data));
                 axios.get(`/GetGoods?marketId=${marketId}`)
                     .then(function (response) {
