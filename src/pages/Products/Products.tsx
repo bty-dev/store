@@ -41,6 +41,7 @@ const Products: React.FC = () => {
     const [productChecked, setProductChecked] = useState<number[]> ([]);
     const inputFile = useRef<HTMLInputElement | null>(null)
     const [base64String, setBase64String] = useState<string>("")
+    const [fileState, setFile] = useState<string>("");
 
 
     const setVisible = () => {
@@ -159,7 +160,7 @@ const Products: React.FC = () => {
         // @ts-ignore
         let me = this;
         // @ts-ignore
-        file = event.target.files[0];
+        setFile(event.target.files[0]);
         console.log(file)
         let reader = new FileReader();
         reader.readAsDataURL(file);
@@ -179,7 +180,7 @@ const Products: React.FC = () => {
 
     const setImageToGood = (): void => {
         let formData = new FormData();
-        formData.append("file", file);
+        formData.append("file", fileState);
         axios.post(`/SetGoodsImage?goodIds=${productChecked.join(",")}`, formData, {
             headers: {
                 "Access-Control-Allow-Origin": "*",
@@ -189,6 +190,7 @@ const Products: React.FC = () => {
         })
             .then(function (response) {
                 setProductChecked(prevState => [...prevState])
+
                 console.log(JSON.stringify(response.data));
                 axios.get(`/GetGoods?marketId=${marketId}`)
                     .then(function (response) {
