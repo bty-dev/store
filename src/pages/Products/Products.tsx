@@ -118,6 +118,7 @@ const Products: React.FC = () => {
     }
 
     const showGoodsWithoutImg = (marketId: number): void => {
+        setLoading(true)
         if (!counterChecked) {
             axios.get(`/GetGoodsWithoutImg?marketId=${marketId}`)
                 .then(function (response) {
@@ -241,13 +242,16 @@ const Products: React.FC = () => {
                         <ButtonBlackEdit onClick={setVisible}/>
                     </div>
                 </div>
+                <div className={classes.products__container}>
+                    {isLoading ? <LoadingAnimation/> : data.map(item => (
+                        <ProductListItem setCheckedProduct={setCheckedProduct} Id ={item.Id} key={item.Id} img={item.Thumbnail ? item.Thumbnail : tomato} title={item.Name} price={item.Price} category={item.CategoryName} group={item.GroupPLU} PLU={item.PLU}/>
+                    ))}
+                    {/*<div className={classes.pagination}>*/}
+                    {/*    <Pagination setPageNum={setPageNum}/>*/}
+                    {/*</div>*/}
+                </div>
 
-                {isLoading ? <LoadingAnimation/> : data.map(item => (
-                    <ProductListItem setCheckedProduct={setCheckedProduct} Id ={item.Id} key={item.Id} img={item.Thumbnail ? item.Thumbnail : tomato} title={item.Name} price={item.Price} category={item.CategoryName} group={item.GroupPLU} PLU={item.PLU}/>
-                ))}
-                {/*<div className={classes.pagination}>*/}
-                {/*    <Pagination setPageNum={setPageNum}/>*/}
-                {/*</div>*/}
+
                 <ModalAccept setImageToGood={setImageToGood} visible={isModal} setVisible={setModal} text="Вы уверенны, что хотите изменить фото товара?"/>
             </div>
         </div>
