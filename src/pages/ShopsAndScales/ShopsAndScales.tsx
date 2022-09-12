@@ -80,7 +80,11 @@ const ShopsAndScales: React.FC = () => {
     useEffect(() => {
         getMarkets();
     }, [])
-
+    // const getRole = () => {
+    //     axios.get(`/GetRole?login=${login}`).then((response) => {
+    //         return response.data
+    //     })
+    // }
     const getMarkets = async () => {
         axios.get('/GetMarkets')
             .then(function (response) {

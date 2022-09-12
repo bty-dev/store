@@ -5,6 +5,7 @@ import SearchField from "./components/UI/SearchField/SearchField";
 import Products from "./pages/Products/Products";
 import Categories from "./pages/Categories/Categories";
 import {Routes, Route, Link} from "react-router-dom";
+import axios from './services/ApiService'
 import OldScales from "./pages/OldScales/OldScales";
 import { PageLayout } from "./components/PageLayout";
 import { Login } from "./components/Auth/Login"
@@ -17,12 +18,15 @@ import { callMsGraph } from "./graph";
 import {AuthenticationResult} from "@azure/msal-browser";
 
 function App() {
+  const [email, setEmail] = useState(null as unknown as string);
+  const [role, setRole] = useState(null);
   function ProfileContent() {
     const { instance, accounts } = useMsal();
     const [graphData, setGraphData] = useState(null);
 
     const name = accounts[0] && accounts[0].name;
-
+    setEmail(accounts[0].username);
+    
     function RequestProfileData() {
         const request = {
             ...loginRequest,
@@ -38,23 +42,33 @@ function App() {
             });
         });
     }
-
+    
     return (
         <>
-            <h5 className="card-title">Welcome {name}</h5>
+            {/* <h5 className="card-title">Welcome {name}</h5>
             {graphData ? 
                 <ProfileData graphData={graphData} />
                 :
                 <Button variant="secondary" onClick={RequestProfileData}>Request Profile Information</Button>
-            }
+            } */}
         </>
     );
 };
+let data
+const getRole = () => {
+  axios.get(`/GetRole?login=${email}`).then((response) => {    
+    return setRole(response.data)
+  })
+}
+getRole()
+// let data = getRole()
+// console.log(role);
+
   return (
     // <div>
     <PageLayout>
       <AuthenticatedTemplate>
-        {/* <ProfileContent /> */}
+        <ProfileContent />
         <Routes>
             <Route path="/" element={ <ShopsAndScales/>}/>
             <Route path="/products" element={ <Products />}/>

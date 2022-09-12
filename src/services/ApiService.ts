@@ -8,6 +8,12 @@ export default axios.create({
 
 //Есть пару вопросов по работе с внешними стейтами, посоветуюсь с Владом
 
+export const getRole = (login: string) => {
+    axios.get(`/GetRole?login=${login}`).then((response) => {
+        return response.data
+    })
+}
+
 export const getMarkets = async () => {
     axios.get("/GetMarkets")
         .then(function (response) {
