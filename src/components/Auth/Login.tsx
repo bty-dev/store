@@ -1,6 +1,8 @@
+import classes from './Login.module.scss';
+
 export const Login = () => {
     return (
-        <div>
+        <div className={classes.main}>
             Авторизуйтесь
         </div>
     )

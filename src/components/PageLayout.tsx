@@ -21,7 +21,7 @@ export const PageLayout = (props: { children: any; }) => {
 
     return (
         <>
-            <Navbar bg="primary" variant="dark" style={{display: "flex", flexDirection: "row"}}>
+            <Navbar  variant="dark" style={{display: "flex", flexDirection: "row", backgroundColor: "#F2F5FA"}}>
                 { isAuthenticated ? <SignOutButton /> : <SignInButton /> }
             </Navbar>
             {props.children}

@@ -59,7 +59,6 @@ function App() {
             <Route path="/" element={ <ShopsAndScales/>}/>
             <Route path="/products" element={ <Products />}/>
             <Route path="/categories" element={ <Categories />}/>
-            <Route path="/oldScales" element={ <OldScales />}/>
         </Routes>
       </AuthenticatedTemplate>
       <UnauthenticatedTemplate>

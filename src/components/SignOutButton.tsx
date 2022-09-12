@@ -16,6 +16,10 @@ export const SignOutButton = () => {
     const { instance } = useMsal();
 
     return (
-        <Button variant="secondary" className="ml-auto" onClick={() => handleLogout(instance)}>Выйти</Button>
+        <>
+            <Button variant="secondary" style={{marginLeft: 10, marginRight: 5}}  onClick={() => handleLogout(instance)}>Выйти</Button>
+            <Button variant="secondary"> <a style={{textDecoration: "none", color: "#fff"}} href="#">Статус весов</a></Button>
+        </>
+
     );
 }
