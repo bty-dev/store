@@ -73,16 +73,16 @@ const ModalChoose = ({visible, setVisible, marketId}: ModalChooseProps) => {
         axios.get(`https://localhost:44302/api/Portal/GetMarketCategories?marketId=${marketId}`)
             .then(function (response) {
                 setCardList(prevState => [response.data])
-                debugger
+                // debugger
                 console.log(response.data)
-                debugger
+                // debugger
                 console.log(cardList)
                 let copyObj = cardList.map((item, index) => {
                     item.order = index + 1
                     item.RuName = response.data[index].RuName
                     return item
                 })
-                debugger
+                // debugger
                 console.log(copyObj)
                 setCardList(copyObj)
                 console.log(cardList)

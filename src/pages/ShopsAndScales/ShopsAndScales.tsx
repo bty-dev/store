@@ -13,6 +13,7 @@ import axios from '../../services/ApiService'
 import LoadingAnimation from "../../components/LoadingAnimation/LoadingAnimation";
 import Tab from "../../components/Tab/Tab";
 import Swal from "sweetalert2";
+import { ShopsAndScalesProps } from '../../App';
 
 interface ShopItem {
     Id: string;
@@ -32,7 +33,13 @@ interface ScaleItem {
     CategoryName: string
 }
 
-const ShopsAndScales: React.FC = () => {
+interface Props {
+    userdata?: ShopsAndScalesProps
+}
+
+const ShopsAndScales: React.FC<Props> = ({userdata}) => {
+    console.log(userdata);
+    
     const [isLoading, setLoading] = useState(true);
     const [isModal, setModal] = useState(false);
     const [forceUpdate, setForce] = useState(0);
@@ -47,7 +54,7 @@ const ShopsAndScales: React.FC = () => {
         setChecked(!isChecked)
         setMarketsIds(code)
     }
-
+    
     const setVisible = () => {
         if (isChecked) {
             setModal(true);
@@ -80,22 +87,31 @@ const ShopsAndScales: React.FC = () => {
     useEffect(() => {
         getMarkets();
     }, [])
-    // const getRole = () => {
-    //     axios.get(`/GetRole?login=${login}`).then((response) => {
-    //         return response.data
-    //     })
-    // }
+    useEffect(() => {
+        getMarkets()
+    }, [userdata])
     const getMarkets = async () => {
-        axios.get('/GetMarkets')
-            .then(function (response) {
-                console.log(JSON.stringify(response.data));
-                setShops(response.data)
+        let response = await axios.get('/GetMarkets')
+                console.log(userdata);
+                
+                if (userdata?.Role == 'admin') {
+
+                    
+                    setShops(response.data)
+                    
+                } else if(userdata?.Role == "user") {
+                    let shopsMut = [{
+                        Id: "D004", 
+                        MarketCode: userdata.Scales[0].MarketID, 
+                        Name: userdata.Scales[0].MarketID, 
+                        Address: "Ul. Bebender", 
+                        Scales: []
+                    }]
+                    // @ts-ignore
+                    setShops(shopsMut)
+                }
                 setLoading(false)
                 console.log(shops)
-            })
-            .catch(function (error) {
-                console.log(error);
-            });
     }
 
     const setDefaultCategory = async () => {
