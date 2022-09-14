@@ -244,7 +244,7 @@ const Products: React.FC = () => {
                 </div>
                 <div className={classes.products__container}>
                     {isLoading ? <LoadingAnimation/> : data.map(item => (
-                        <ProductListItem setCheckedProduct={setCheckedProduct} Id ={item.Id} key={item.Id} img={item.Thumbnail ? item.Thumbnail : tomato} title={item.Name} price={item.Price} category={item.CategoryName} group={item.GroupPLU} PLU={item.PLU}/>
+                        <ProductListItem setCheckedProduct={setCheckedProduct} Id ={item.Id} key={item.Id} img={item.Thumbnail} title={item.Name} price={item.Price} category={item.CategoryName} group={item.GroupPLU} PLU={item.PLU}/>
                     ))}
                     {/*<div className={classes.pagination}>*/}
                     {/*    <Pagination setPageNum={setPageNum}/>*/}

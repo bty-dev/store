@@ -12,63 +12,101 @@ import { AuthenticatedTemplate, UnauthenticatedTemplate, useMsal } from "@azure/
 import { Button } from "react-bootstrap";
 import { useState } from "react";
 import { loginRequest } from "./authConfig";
-import { ProfileData } from "./components/ProfileData";
+import { ProfileData } from './components/ProfileData'
 import { callMsGraph } from "./graph";
 import {AuthenticationResult} from "@azure/msal-browser";
+import axios from "axios";
 
+export interface ShopsAndScalesProps {
+    Role: string,
+    MarketCode: string,
+    Name: string,
+    Address: string,
+    Scales: [
+        {
+            Id: number,
+            MarketID: string,
+            Type: string,
+            Number: string,
+            IP: string,
+            Status: boolean,
+            CategoryName: string
+        }
+    ]
+}
 function App() {
-  function ProfileContent() {
-    const { instance, accounts } = useMsal();
-    const [graphData, setGraphData] = useState(null);
+    const [email, setEmail] = useState('');
+    const [userdata, setUserdata] = useState<ShopsAndScalesProps>();
 
-    const name = accounts[0] && accounts[0].name;
+    //
+    // console.log(accounts);
 
-    function RequestProfileData() {
-        const request = {
-            ...loginRequest,
-            account: accounts[0]
-        };
+    function ProfileContent() {
+        const [graphData, setGraphData] = useState(null);
+        const { instance, accounts } = useMsal();
+        const name = accounts[0] && accounts[0].name;
+        setEmail(accounts[0].username)
+        console.log(accounts);
+        const getRole = async () => {
+            let response = await axios.get(`/GetRole?login=${accounts[0].username}`)
+            // @ts-ignore
+            setUserdata(prevState => {
+                if (JSON.stringify(prevState) === JSON.stringify(response.data)) {
+                    return prevState
+                }
+                return response.data
+            })
+        }
+        getRole()
 
-        // Silently acquires an access token which is then attached to a request for Microsoft Graph data
-        instance.acquireTokenSilent(request).then((response: AuthenticationResult) => {
-            callMsGraph(response.accessToken).then(response => setGraphData(response));
-        }).catch((e: Error) => {
-            instance.acquireTokenPopup(request).then((response: AuthenticationResult) => {
+
+        function RequestProfileData() {
+            const request = {
+                ...loginRequest,
+                account: accounts[0]
+            };
+
+            // Silently acquires an access token which is then attached to a request for Microsoft Graph data
+            instance.acquireTokenSilent(request).then((response: AuthenticationResult) => {
                 callMsGraph(response.accessToken).then(response => setGraphData(response));
+            }).catch((e: Error) => {
+                instance.acquireTokenPopup(request).then((response: AuthenticationResult) => {
+                    callMsGraph(response.accessToken).then(response => setGraphData(response));
+                });
             });
-        });
-    }
+        }
 
+        return (
+            <>
+                <h5 className="card-title">Email: {email}</h5>
+                {graphData ?
+                    <ProfileData graphData={graphData} />
+                    : null
+                    // <Button variant="secondary" onClick={RequestProfileData}>Request Profile Information</Button>
+                }
+            </>
+        );
+    };
     return (
-        <>
-            <h5 className="card-title">Welcome {name}</h5>
-            {graphData ? 
-                <ProfileData graphData={graphData} />
-                :
-                <Button variant="secondary" onClick={RequestProfileData}>Request Profile Information</Button>
-            }
-        </>
+        // <div>
+        <PageLayout>
+            <AuthenticatedTemplate>
+                <ProfileContent />
+                <Routes>
+                    <Route path="/" element={ <ShopsAndScales userdata={userdata} />}/>
+                    <Route path="/products" element={ <Products />}/>
+                    <Route path="/categories" element={ <Categories />}/>
+                    {/*<Route path="/oldScales" element={ <OldScales />}/>*/}
+                </Routes>
+            </AuthenticatedTemplate>
+            <UnauthenticatedTemplate>
+                <Routes>
+                    <Route path="/" element={<Login />}/>
+                </Routes>
+            </UnauthenticatedTemplate>
+        </PageLayout>
+        // </div>
     );
-};
-  return (
-    // <div>
-    <PageLayout>
-      <AuthenticatedTemplate>
-        {/* <ProfileContent /> */}
-        <Routes>
-            <Route path="/" element={ <ShopsAndScales/>}/>
-            <Route path="/products" element={ <Products />}/>
-            <Route path="/categories" element={ <Categories />}/>
-        </Routes>
-      </AuthenticatedTemplate>
-      <UnauthenticatedTemplate>
-        <Routes>
-          <Route path="/" element={<Login />}/>
-        </Routes>
-      </UnauthenticatedTemplate>
-    </PageLayout>
-    // </div>
-  );
 }
 
 export default App;

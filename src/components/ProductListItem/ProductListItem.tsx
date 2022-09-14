@@ -43,7 +43,10 @@ const ProductListItem: React.FC<ProductListItemProps> = ({Id, img, title, price,
         <div className={classes.container}>
             <Checkbox onClick={() => setCheckedProduct(Id)} icon={<RadioButtonUncheckedIcon />} checkedIcon={<CheckCircleOutlineIcon />}/>
             <div className={classes.main}>
-                <img style={styleSt} className={classes.thumb} src={`data:image/png;base64,${img}`} alt="?"  onError={() => setStyleSt(back)} />
+                {img ? <img style={styleSt} className={classes.thumb} src={`data:image/png;base64,${img}`} alt="?"  onError={() => setStyleSt(back)} /> :
+                    <img className={classes.thumb} src={image_not_found}/>
+                }
+
                 <div className={classes.product__title__block}>
                     <div className={classes.product__title__first__price}>{title.length > 50 ? `${title.substring(0, 50)}...` : title}</div>
                     <div className={classes.product__subtitle}>{PLU}</div>

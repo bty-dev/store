@@ -13,6 +13,7 @@ import axios from '../../services/ApiService'
 import LoadingAnimation from "../../components/LoadingAnimation/LoadingAnimation";
 import Tab from "../../components/Tab/Tab";
 import Swal from "sweetalert2";
+import {ShopsAndScalesProps} from "../../App";
 
 interface ShopItem {
     Id: string;
@@ -32,7 +33,11 @@ interface ScaleItem {
     CategoryName: string
 }
 
-const ShopsAndScales: React.FC = () => {
+interface Props {
+    userdata?: ShopsAndScalesProps
+}
+
+const ShopsAndScales: React.FC<Props> = ({userdata}) => {
     const [isLoading, setLoading] = useState(true);
     const [isModal, setModal] = useState(false);
     const [forceUpdate, setForce] = useState(0);
@@ -42,6 +47,7 @@ const ShopsAndScales: React.FC = () => {
     const [isChecked, setChecked] = useState(false)
     const [term, setTerm] = useState("");
     const [marketsIds, setMarketsIds] = useState("")
+
 
     const setCheckedState = (code: string) => {
         setChecked(!isChecked)
@@ -82,6 +88,9 @@ const ShopsAndScales: React.FC = () => {
     useEffect(() => {
         getMarkets();
     }, [])
+    useEffect(() => {
+        getMarkets();
+    }, [userdata])
 
     const getMarkets = async () => {
         axios.get('/GetMarkets')
@@ -102,7 +111,7 @@ const ShopsAndScales: React.FC = () => {
 
     return (
         <div className={classes.page__cont}>
-            <div className={classes.page__title}>Магазины и весы</div>
+            <div className={classes.page__title}>Магазины и весы {userdata?.Role}</div>
             <div className={classes.nav__btns}>
                 <Link style={{ textDecoration: 'none', marginTop: 8}} to="/"><Tab>Весы</Tab></Link>
                 <Link style={{ textDecoration: 'none' }} to="/categories"><Tab styles={{backgroundColor: "#D9D9D9", pointerEvents: "none"}}>Категории</Tab></Link>
