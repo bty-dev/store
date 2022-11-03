@@ -1,0 +1,123 @@
+@import "../../pages/_variables";
+
+.page__cont {
+    padding: 0;
+    margin: 0;
+    position: relative;
+
+    .page__title {
+        color: $page-title-color;
+        font-size: 35px;
+        font-weight: bold;
+        margin-top: 5px;
+        margin-left: 10px;
+        margin-bottom: 10px;
+    }
+    .nav__btns {
+        position: absolute;
+        top: 0;
+        right: 0;
+        display: flex;
+        justify-content: space-evenly;
+        padding: 10px;
+        margin-top: 21px;
+        margin-right: 50px;
+        width: 220px;
+    }
+
+    .page__main {
+        width: 100%;
+        background-color: $page-main-background-color;
+        padding: 10px;
+
+        .products__container {
+            padding: 0 10px;
+            width: 100%;
+            max-height: 72vh;
+            overflow-y: scroll;
+            position: relative;
+            bottom: 0;
+            right: 0;
+            left: 0;
+        }
+
+        .main__top__panel {
+            margin: 10px 50px;
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+
+            .top__filter {
+                padding: 10px 10px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                text-align: center;
+
+                .top__title {
+                    font-size: 30px;
+                    color: #000;
+                    font-weight: bold;
+                    align-self: center;
+                }
+
+                .top__subtitle {
+                    font-size: 25px;
+                    color: #A7A7A7;
+                    font-weight: bold;
+                    align-self: center;
+                    margin: 7px 10px 0 10px;
+
+                }
+            }
+
+            .btns__top {
+                width: 15%;
+                display: flex;
+                flex-direction: row;
+                justify-content: space-around;
+                align-items: center;
+            }
+        }
+
+        .category__title {
+            color: #000;
+            font-size: 30px;
+            font-weight: bold;
+        }
+        .pagination {
+            position: relative;
+            width: 100%;
+            margin: 10px;
+            margin-top: 55px;
+            bottom: 0;
+            left: 0;
+            justify-self: flex-end;
+        }
+    }
+
+    .shop__title {
+        font-size: 20px;
+        font-weight: normal;
+        color: #000;
+    }
+}
+
+.clear__btn {
+    border-radius: 10px;
+    background-color: #000;
+    border: 2px solid transparent;
+    color: #fff;
+    padding: 8px 10px;
+    font-size: 18px;
+    font-weight: 700;
+    transition: .3s;
+}
+
+.clear__btn:hover {
+    border-color: #000;
+    background-color: transparent;
+    color: #000;
+}

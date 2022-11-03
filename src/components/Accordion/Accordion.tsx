@@ -1,0 +1,118 @@
+import React, {useState} from 'react';
+import Checkbox, { CheckboxClasses } from '@mui/material/Checkbox';
+import classes from "./Accrodion.module.scss";
+import ButtonBlack from "../UI/Buttons/ButtonBlack/ButtonBlack";
+import {CSSTransition} from "react-transition-group";
+import icon from "./list_control.svg";
+import iconOpen from "./list_control_open.svg";
+import iconGray from "./icon_gray.svg";
+import ButtonStroke from "../UI/Buttons/ButtonStroke/ButtonStroke";
+import {Link, useNavigate} from "react-router-dom";
+import Chips from "../Chips/Chips";
+import {green} from "@mui/material/colors";
+import ModalSetCategory from "../UI/Modals/ModalSetCategory/ModalSetCategory";
+import axios from "axios";
+import RadioButtonUncheckedIcon from '@mui/icons-material/RadioButtonUnchecked';
+import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
+
+interface AccordionProps {
+    title: string;
+    code: string;
+    address: string;
+    scales: Array<any>;
+    setDefCat?: () => void;
+    setCheckedState: (code: string) => void;
+}
+const Accordion = ({title, code, address, scales, setDefCat, setCheckedState}: AccordionProps) => {
+    const [isOpen, setOpen] = useState(false);
+
+
+    const toggleOpen = () => {
+        setOpen(!isOpen)
+        console.log(isOpen)
+    }
+    //console.log(classes);
+
+
+
+
+    return (
+
+        <div>
+            <div className={classes.container}>
+                <Checkbox onClick={() => setCheckedState(code)} icon={<RadioButtonUncheckedIcon />} checkedIcon={<CheckCircleOutlineIcon />} className={classes.checkbox} style={{alignSelf: `${isOpen ? "flex-start" : "center"}`}}/>
+                <div className={classes.wrapper}>
+                    <div className={classes.main}>
+                        <div className={classes.text__hint}>Код магазина</div>
+                        <div className={classes.text__value}>{code}</div>
+                        <div className={classes.text__hint}>Название магазина</div>
+                        <div className={classes.text__value}>{title}</div>
+                        <div className={classes.text__hint}>Адрес</div>
+                        <div className={classes.text__value}>{address}</div>
+                        <Link to="/products" state={{marketId: code}}><ButtonBlack>Товары</ButtonBlack></Link>
+                        <div className={classes.open_more__block}>
+                            <div className={classes.text__hint_light}>{scales.length} {scales.length === 1 ? "весы " : "весов"}</div>
+                            {scales.length === 0 ? <div style={{width: 30}}></div> : <img onClick={() => toggleOpen()} className={classes.img} src={isOpen ? iconOpen : icon} alt="open"/>}
+
+                        </div>
+                    </div>
+                    {isOpen
+                    ?
+                        <div className={classes.table__low}>
+                            <div className={classes.table__line}>
+                                <div className={classes.text__hint}>Тип <img className={classes.img} src={iconGray} alt="open"/></div>
+                                <div className={classes.text__hint}>Номер <img className={classes.img} src={iconGray} alt="open"/></div>
+                                <div className={classes.text__hint}>IP <img className={classes.img} src={iconGray} alt="open"/></div>
+                                <div className={classes.text__hint}>Статус <img className={classes.img} src={iconGray} alt="open"/></div>
+                                <div className={classes.text__hint}>Категории <img className={classes.img} src={iconGray} alt="open"/></div>
+                            </div>
+                            {scales.map(item => (<TableLine code={code} id={item.id} number={item.number} ip={item.ip} status={item.status} type={item.type}/>))}
+                        </div>
+
+                    : null
+                    }
+                </div>
+            </div>
+        </div>
+    );
+};
+
+export default Accordion;
+interface tableLineProps {
+    number: number;
+    ip: string;
+    type: string;
+    status: boolean;
+    id: number;
+    code: string;
+}
+
+const setDefaultCategoryForScale = async (scaleId: number, categoryId: number) => {
+    axios.post(`https://localhost:7158/Portal/SetDefaultCategory?scaleId=${scaleId}&categoryIndex=${categoryId}`)
+        .then(function (response) {
+            console.log(response.status);
+        })
+        .catch(function (error) {
+            console.log(error);
+        });
+}
+
+const TableLine = ({number, ip, type, status, id, code}: tableLineProps) => {
+    const [isModal, setModal] = useState(false);
+    const setVisible = () => {
+        setModal(true);
+    }
+    return (
+        <div className={classes.table__line}>
+            <div className={classes.text__value}>{type}</div>
+            <div className={classes.text__value}>{number}</div>
+            <div className={classes.text__value}>{ip}</div>
+            <div className={classes.text__value}>{status === true ? "Загруженно" : "Не загруженно"}</div>
+            <div className={classes.text__value}>
+                <ButtonStroke onClick={setVisible}>Выбрать</ButtonStroke>
+            </div>
+            <ModalSetCategory code={code} forScale={true} scaleId={id} itemNumber={1} setCategoryForScale={setDefaultCategoryForScale} visible={isModal} setVisible={setModal}/>
+
+        </div>
+    )
+}

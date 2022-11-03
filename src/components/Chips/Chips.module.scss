@@ -1,0 +1,20 @@
+.chips {
+    cursor: pointer;
+    background-color: #F2F5FA;
+    border-radius: 20px;
+    padding: 10px 15px;
+    text-align: center;
+    font-weight: bold;
+    color: #000;
+    font-size: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: .3s;
+    text-decoration: none;
+
+    &:hover {
+        background-color: #000;
+        color: #F2F5FA;
+    }
+}
